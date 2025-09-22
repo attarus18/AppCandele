@@ -1,176 +1,216 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta charset="UTF-8">
-    <title>Calcolatore Cera per Candele</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcolatore per Candele</title>
     <style>
+        /* --- CSS: La parte che si occupa dello stile e dell'aspetto --- */
+        
+        /* Impostazioni generali per tutta la pagina */
         body {
-            font-family: 'Inter', sans-serif;
-            -webkit-tap-highlight-color: transparent;
+            background-color: #2c2c2c; /* Colore di sfondo scuro */
+            color: #ffffff; /* Colore del testo bianco */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Un font pulito e moderno */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
-#waxWeight,
-#fragrancePercentage,
-#colorPercentage {
-    color: orange;
-}
+
+        /* Il contenitore principale del nostro calcolatore */
+        .calcolatore-container {
+            background-color: #3d3d3d; /* Un grigio leggermente più chiaro per il box */
+            padding: 30px;
+            border-radius: 15px; /* Bordi arrotondati */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Ombra per dare profondità */
+            width: 90%;
+            max-width: 450px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #ffa500; /* Arancione per il titolo */
+            margin-bottom: 25px;
+        }
+
+        /* Stile per le etichette (es. "Grammi di cera") */
+        .input-gruppo label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        /* Stile per gli input di testo, numero e il menu a tendina */
+        .input-gruppo input,
+        .input-gruppo select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid #555;
+            background-color: #505050;
+            color: #ffffff;
+            box-sizing: border-box; /* Assicura che il padding non cambi la larghezza */
+        }
+
+        /* Stile per i selettori scorrevoli (slider) */
+        .slider-container {
+            margin-bottom: 20px;
+        }
+        
+        .slider {
+            width: 100%;
+            cursor: pointer;
+        }
+        
+        /* Etichetta che mostra il valore % dello slider */
+        .slider-value {
+            color: #ffa500;
+            font-weight: bold;
+        }
+
+        /* Contenitore per i due pulsanti */
+        .tasti-container {
+            display: flex;
+            justify-content: space-between; /* Spazio tra i pulsanti */
+            margin-top: 20px;
+        }
+
+        /* Stile per i pulsanti */
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            background-color: #ffa500; /* Sfondo arancione */
+            color: #2c2c2c; /* Testo scuro per un buon contrasto */
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer; /* Il cursore diventa una mano */
+            transition: background-color 0.3s; /* Animazione al passaggio del mouse */
+            width: 48%; /* Larghezza per ogni pulsante */
+        }
+        
+        /* Effetto al passaggio del mouse sui pulsanti */
+        button:hover {
+            background-color: #ffc14d; /* Arancione più chiaro */
+        }
+
+        /* Area dove mostreremo i risultati */
+        #risultato {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 1.1em;
+            background-color: #2c2c2c;
+            padding: 15px;
+            border-radius: 8px;
+        }
     </style>
 </head>
-<body class="bg-gray-900 text-gray-100">
+<body>
 
-    <div class="min-h-screen flex items-center justify-center p-4">
-        <div class="w-full max-w-md mx-auto bg-gray-800 rounded-2xl shadow-lg p-6 md:p-8 space-y-6">
-            
-            <div class="text-center">
-                <h1 class="text-2xl md:text-3xl font-bold text-orange-400">Calcolatore per Candele</h1>
-                <p class="text-gray-400 mt-2">Inserisci i dettagli per calcolare gli ingredienti.</p>
-            </div>
+    <div class="calcolatore-container">
+        <h1>Calcolatore Candele</h1>
 
-            <div class="border-2 border-orange-500 rounded-xl p-5 space-y-4">
-                <div>
-                    <label for="waxWeight" class="block text-sm font-medium text-gray-200 mb-1">Peso della Cera (in grammi)</label>
-                    <input type="number" id="waxWeight" placeholder="Es. 500" class="w-full px-4 py-2 text-white bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-400 transition duration-150">
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-gray-200 mb-2">Tipo di Cera</label>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <input type="radio" id="soyWax" name="waxType" value="soy" class="hidden peer" checked>
-                            <label for="soyWax" class="block w-full text-center py-3 px-4 bg-gray-700 border border-gray-600 rounded-lg cursor-pointer peer-checked:border-orange-500 peer-checked:ring-2 peer-checked:ring-orange-500 transition duration-150">
-                                Cera di Soia
-                            </label>
-                        </div>
-                        <div>
-                            <input type="radio" id="paraffinWax" name="waxType" value="paraffin" class="hidden peer">
-                            <label for="paraffinWax" class="block w-full text-center py-3 px-4 bg-gray-700 border border-gray-600 rounded-lg cursor-pointer peer-checked:border-orange-500 peer-checked:ring-2 peer-checked:ring-orange-500 transition duration-150">
-                                Paraffina
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <label for="fragrancePercentage" class="block text-sm font-medium text-gray-200 mb-1">Percentuale Fragranza (%)</label>
-                    <input type="number" id="fragrancePercentage" value="8" step="0.1" placeholder="Es. 8" class="w-full px-4 py-2 text-white bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-400 transition duration-150">
-                </div>
-
-                <div>
-                    <label for="colorPercentage" class="block text-sm font-medium text-gray-200 mb-1">Percentuale Colore (%)</label>
-                    <input type="number" id="colorPercentage" value="0.5" step="0.1" placeholder="Es. 0.5" class="w-full px-4 py-2 text-white bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-400 transition duration-150">
-                </div>
-                
-                <button id="calculateBtn" class="w-full bg-orange-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-orange-700 focus:outline-none focus:ring-4 focus:ring-orange-300 transition-transform duration-150">
-                    Calcola Ingredienti
-                </button>
-            </div>
-
-            <div id="results" class="hidden pt-6 space-y-4 border-2 border-orange-500 rounded-xl p-5">
-                 <hr class="border-gray-600">
-                <h2 class="text-xl font-bold text-orange-400 text-center">Ingredienti Necessari</h2>
-                <div class="bg-gray-700 p-4 rounded-lg text-center">
-                    <p class="text-gray-300">Quantità Fragranza:</p>
-                    <p class="text-2xl font-bold text-orange-400"><span id="fragranceAmount">0</span> g</p>
-                </div>
-                <div class="bg-gray-700 p-4 rounded-lg text-center">
-                    <p class="text-gray-300">Quantità Colore (in polvere/gocce):</p>
-                    <p class="text-2xl font-bold text-orange-400"><span id="colorAmount">0</span> g</p>
-                </div>
-                <button id="resetBtn" class="w-full bg-gray-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-500 transition-transform duration-150">
-                    Reset
-                </button>
-            </div>
-
+        <div class="input-gruppo">
+            <label for="grammiCera">Grammi di cera da fondere:</label>
+            <input type="number" id="grammiCera" placeholder="Es. 100">
         </div>
+
+        <div class="input-gruppo">
+            <label for="tipoCera">Tipo di cera:</label>
+            <select id="tipoCera">
+                <option value="soia">Soia</option>
+                <option value="paraffina">Paraffina</option>
+                <option value="cocco">Cocco</option>
+            </select>
+        </div>
+
+        <div class="slider-container">
+            <label for="percFragranza">Percentuale di fragranza: <span id="valoreFragranza" class="slider-value">5%</span></label>
+            <input type="range" id="percFragranza" class="slider" min="1" max="12" value="5">
+        </div>
+
+        <div class="slider-container">
+            <label for="percColore">Percentuale di colore: <span id="valoreColore" class="slider-value">1%</span></label>
+            <input type="range" id="percColore" class="slider" min="0" max="5" value="1" step="0.1">
+        </div>
+        
+        <div class="tasti-container">
+            <button id="calcola">Calcola</button>
+            <button id="reset">Reset</button>
+        </div>
+
+        <div id="risultato"></div>
     </div>
-    
+
     <script>
-        // Lo script JavaScript non necessita di modifiche
-        const waxWeightInput = document.getElementById('waxWeight');
-        const fragrancePercentageInput = document.getElementById('fragrancePercentage');
-        const colorPercentageInput = document.getElementById('colorPercentage');
-        const calculateBtn = document.getElementById('calculateBtn');
-        const resultsDiv = document.getElementById('results');
-        const fragranceAmountSpan = document.getElementById('fragranceAmount');
-        const colorAmountSpan = document.getElementById('colorAmount');
-        const resetBtn = document.getElementById('resetBtn');
-        const waxWeightLabel = document.querySelector('label[for="waxWeight"]');
-        const fragrancePercentageLabel = document.querySelector('label[for="fragrancePercentage"]');
-        const colorPercentageLabel = document.querySelector('label[for="colorPercentage"]');
-        function handleLabelColor(input, label) {
-            input.addEventListener('input', () => {
-                if (input.value.length > 0) {
-                    label.classList.add('text-white');
-                } else {
-                    label.classList.remove('text-white');
-                }
-            });
+        // --- JAVASCRIPT: La logica che fa funzionare tutto ---
+
+        // 1. Selezioniamo tutti gli elementi HTML con cui dobbiamo interagire
+        const grammiCeraInput = document.getElementById('grammiCera');
+        const tipoCeraSelect = document.getElementById('tipoCera');
+        const percFragranzaSlider = document.getElementById('percFragranza');
+        const percColoreSlider = document.getElementById('percColore');
+        
+        const valoreFragranzaSpan = document.getElementById('valoreFragranza');
+        const valoreColoreSpan = document.getElementById('valoreColore');
+        
+        const calcolaBtn = document.getElementById('calcola');
+        const resetBtn = document.getElementById('reset');
+        const risultatoDiv = document.getElementById('risultato');
+
+        // 2. Funzioni per aggiornare in tempo reale il valore % vicino agli slider
+        percFragranzaSlider.oninput = function() {
+            valoreFragranzaSpan.textContent = this.value + '%';
         }
-        handleLabelColor(waxWeightInput, waxWeightLabel);
-        handleLabelColor(fragrancePercentageInput, fragrancePercentageLabel);
-        handleLabelColor(colorPercentageInput, colorPercentageLabel);
-        const soyWaxRadio = document.getElementById('soyWax');
-        const paraffinWaxRadio = document.getElementById('paraffinWax');
-        const defaultFragranceSoy = 8;
-        const defaultFragranceParaffin = 6;
-        const defaultColor = 0.5;
-        function updatePercentages() {
-            const selectedWaxType = document.querySelector('input[name="waxType"]:checked').value;
-            if (selectedWaxType === 'soy') {
-                fragrancePercentageInput.value = defaultFragranceSoy;
-            } else {
-                fragrancePercentageInput.value = defaultFragranceParaffin;
+
+        percColoreSlider.oninput = function() {
+            // usiamo toFixed(1) per mostrare una cifra decimale (es. 0.5%)
+            valoreColoreSpan.textContent = parseFloat(this.value).toFixed(1) + '%';
+        }
+
+        // 3. Logica del pulsante "Calcola"
+        calcolaBtn.addEventListener('click', function() {
+            // Prendiamo i valori inseriti dall'utente
+            const cera = parseFloat(grammiCeraInput.value);
+            const fragranzaPerc = parseFloat(percFragranzaSlider.value);
+            const colorePerc = parseFloat(percColoreSlider.value);
+
+            // Controlliamo se la quantità di cera è un numero valido e positivo
+            if (isNaN(cera) || cera <= 0) {
+                risultatoDiv.innerHTML = "Per favore, inserisci una quantità di cera valida.";
+                return; // Ferma la funzione se il valore non è valido
             }
-            colorPercentageInput.value = defaultColor;
-            [fragrancePercentageInput, colorPercentageInput].forEach((input, i) => {
-                const label = i === 0 ? fragrancePercentageLabel : colorPercentageLabel;
-                if (input.value.length > 0) {
-                    label.classList.add('text-white');
-                } else {
-                    label.classList.remove('text-white');
-                }
-            });
-        }
-        function resetCalculator() {
-            waxWeightInput.value = '';
-            waxWeightInput.classList.remove('border-red-500', 'ring-red-500');
-            soyWaxRadio.checked = true;
-            updatePercentages();
-            fragranceAmountSpan.textContent = '0';
-            colorAmountSpan.textContent = '0';
-            resultsDiv.classList.add('hidden');
-            [waxWeightLabel, fragrancePercentageLabel, colorPercentageLabel].forEach(label => label.classList.remove('text-white'));
-        }
-        soyWaxRadio.addEventListener('change', updatePercentages);
-        paraffinWaxRadio.addEventListener('change', updatePercentages);
-        calculateBtn.addEventListener('click', () => {
-            const waxWeight = parseFloat(waxWeightInput.value);
-            const fragrancePercentage = parseFloat(fragrancePercentageInput.value);
-            const colorPercentage = parseFloat(colorPercentageInput.value);
-            if (!waxWeight || waxWeight <= 0) {
-                resultsDiv.classList.add('hidden');
-                waxWeightInput.classList.add('border-red-500', 'ring-red-500');
-                return;
-            } else {
-                waxWeightInput.classList.remove('border-red-500', 'ring-red-500');
-            }
-            const fragranceGrams = waxWeight * (fragrancePercentage / 100);
-            const colorGrams = waxWeight * (colorPercentage / 100);
-            fragranceAmountSpan.textContent = fragranceGrams.toFixed(2);
-            colorAmountSpan.textContent = colorGrams.toFixed(2);
-            resultsDiv.classList.remove('hidden');
+
+            // Calcoliamo i grammi di fragranza e colore
+            const grammiFragranza = (cera * fragranzaPerc) / 100;
+            const grammiColore = (cera * colorePerc) / 100;
+
+            // Mostriamo i risultati all'utente
+            risultatoDiv.innerHTML = `
+                Dovrai aggiungere: <br>
+                <strong>${grammiFragranza.toFixed(2)} gr</strong> di fragranza <br>
+                <strong>${grammiColore.toFixed(2)} gr</strong> di colorante
+            `;
         });
-        resetBtn.addEventListener('click', resetCalculator);
-        waxWeightInput.addEventListener('input', () => {
-            if (waxWeightInput.value.length > 0) {
-                waxWeightInput.classList.remove('border-red-500', 'ring-red-500');
-            }
+        
+        // 4. Logica del pulsante "Reset"
+        resetBtn.addEventListener('click', function() {
+            // Riportiamo tutti i campi ai loro valori iniziali
+            grammiCeraInput.value = '';
+            tipoCeraSelect.value = 'soia';
+            
+            percFragranzaSlider.value = 5;
+            valoreFragranzaSpan.textContent = '5%';
+            
+            percColoreSlider.value = 1;
+            valoreColoreSpan.textContent = '1%';
+            
+            risultatoDiv.innerHTML = ''; // Svuotiamo l'area dei risultati
         });
-        updatePercentages();
     </script>
+
 </body>
 </html>
