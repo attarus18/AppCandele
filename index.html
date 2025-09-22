@@ -3,7 +3,6 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calcolatore Cera per Candele</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,7 +28,7 @@
             <div class="border-2 border-orange-500 rounded-xl p-5 space-y-4">
                 <div>
                     <label for="waxWeight" class="block text-sm font-medium text-gray-200 mb-1">Peso della Cera (in grammi)</label>
-                    <input type="number" id="waxWeight" placeholder="Es. 500" class="w-full px-4 py-2 text-gray-100 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-400 transition duration-150">
+                    <input type="number" id="waxWeight" placeholder="Es. 500" class="w-full px-4 py-2 text-white bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-400 transition duration-150">
                 </div>
 
                 <div>
@@ -52,12 +51,12 @@
 
                 <div>
                     <label for="fragrancePercentage" class="block text-sm font-medium text-gray-200 mb-1">Percentuale Fragranza (%)</label>
-                    <input type="number" id="fragrancePercentage" value="8" step="0.1" placeholder="Es. 8" class="w-full px-4 py-2 text-gray-100 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-400 transition duration-150">
+                    <input type="number" id="fragrancePercentage" value="8" step="0.1" placeholder="Es. 8" class="w-full px-4 py-2 text-white bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-400 transition duration-150">
                 </div>
 
                 <div>
                     <label for="colorPercentage" class="block text-sm font-medium text-gray-200 mb-1">Percentuale Colore (%)</label>
-                    <input type="number" id="colorPercentage" value="0.5" step="0.1" placeholder="Es. 0.5" class="w-full px-4 py-2 text-gray-100 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-400 transition duration-150">
+                    <input type="number" id="colorPercentage" value="0.5" step="0.1" placeholder="Es. 0.5" class="w-full px-4 py-2 text-white bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-400 transition duration-150">
                 </div>
                 
                 <button id="calculateBtn" class="w-full bg-orange-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-orange-700 focus:outline-none focus:ring-4 focus:ring-orange-300 transition-transform duration-150">
@@ -66,7 +65,7 @@
             </div>
 
             <div id="results" class="hidden pt-6 space-y-4 border-2 border-orange-500 rounded-xl p-5">
-                <hr class="border-gray-600">
+                 <hr class="border-gray-600">
                 <h2 class="text-xl font-bold text-orange-400 text-center">Ingredienti Necessari</h2>
                 <div class="bg-gray-700 p-4 rounded-lg text-center">
                     <p class="text-gray-300">Quantità Fragranza:</p>
@@ -83,9 +82,9 @@
 
         </div>
     </div>
-
+    
     <script>
-        // Riferimenti agli elementi del DOM
+        // Lo script JavaScript non necessita di modifiche
         const waxWeightInput = document.getElementById('waxWeight');
         const fragrancePercentageInput = document.getElementById('fragrancePercentage');
         const colorPercentageInput = document.getElementById('colorPercentage');
@@ -94,13 +93,9 @@
         const fragranceAmountSpan = document.getElementById('fragranceAmount');
         const colorAmountSpan = document.getElementById('colorAmount');
         const resetBtn = document.getElementById('resetBtn');
-
-        // Riferimenti alle label
         const waxWeightLabel = document.querySelector('label[for="waxWeight"]');
         const fragrancePercentageLabel = document.querySelector('label[for="fragrancePercentage"]');
         const colorPercentageLabel = document.querySelector('label[for="colorPercentage"]');
-
-        // Funzione per aggiornare il colore della label associata
         function handleLabelColor(input, label) {
             input.addEventListener('input', () => {
                 if (input.value.length > 0) {
@@ -110,22 +105,14 @@
                 }
             });
         }
-
-        // Applica la funzione a ciascun input-label
         handleLabelColor(waxWeightInput, waxWeightLabel);
         handleLabelColor(fragrancePercentageInput, fragrancePercentageLabel);
         handleLabelColor(colorPercentageInput, colorPercentageLabel);
-
-        // Riferimenti ai radio button e ai loro listeners
         const soyWaxRadio = document.getElementById('soyWax');
         const paraffinWaxRadio = document.getElementById('paraffinWax');
-
-        // Imposta i valori predefiniti delle percentuali
         const defaultFragranceSoy = 8;
         const defaultFragranceParaffin = 6;
         const defaultColor = 0.5;
-
-        // Funzione per aggiornare i valori di input in base al tipo di cera
         function updatePercentages() {
             const selectedWaxType = document.querySelector('input[name="waxType"]:checked').value;
             if (selectedWaxType === 'soy') {
@@ -134,8 +121,6 @@
                 fragrancePercentageInput.value = defaultFragranceParaffin;
             }
             colorPercentageInput.value = defaultColor;
-
-            // Aggiorna il colore delle label dopo il cambio tipo cera
             [fragrancePercentageInput, colorPercentageInput].forEach((input, i) => {
                 const label = i === 0 ? fragrancePercentageLabel : colorPercentageLabel;
                 if (input.value.length > 0) {
@@ -145,8 +130,6 @@
                 }
             });
         }
-
-        // Funzione per resettare tutti i campi e nascondere i risultati
         function resetCalculator() {
             waxWeightInput.value = '';
             waxWeightInput.classList.remove('border-red-500', 'ring-red-500');
@@ -155,22 +138,14 @@
             fragranceAmountSpan.textContent = '0';
             colorAmountSpan.textContent = '0';
             resultsDiv.classList.add('hidden');
-            // Reset colore label
             [waxWeightLabel, fragrancePercentageLabel, colorPercentageLabel].forEach(label => label.classList.remove('text-white'));
         }
-
-        // Aggiungi un evento al cambio di selezione del tipo di cera
         soyWaxRadio.addEventListener('change', updatePercentages);
         paraffinWaxRadio.addEventListener('change', updatePercentages);
-
-        // Aggiungi un evento al click del pulsante di calcolo
         calculateBtn.addEventListener('click', () => {
-            // 1. Ottieni i valori di input
             const waxWeight = parseFloat(waxWeightInput.value);
             const fragrancePercentage = parseFloat(fragrancePercentageInput.value);
             const colorPercentage = parseFloat(colorPercentageInput.value);
-
-            // 2. Controlla se l'input del peso della cera è un numero valido e maggiore di zero
             if (!waxWeight || waxWeight <= 0) {
                 resultsDiv.classList.add('hidden');
                 waxWeightInput.classList.add('border-red-500', 'ring-red-500');
@@ -178,30 +153,18 @@
             } else {
                 waxWeightInput.classList.remove('border-red-500', 'ring-red-500');
             }
-            
-            // 3. Esegui i calcoli, dividendo le percentuali per 100
             const fragranceGrams = waxWeight * (fragrancePercentage / 100);
             const colorGrams = waxWeight * (colorPercentage / 100);
-
-            // 4. Mostra i risultati nell'interfaccia
             fragranceAmountSpan.textContent = fragranceGrams.toFixed(2);
             colorAmountSpan.textContent = colorGrams.toFixed(2);
-
-            // 5. Rendi visibile la sezione dei risultati
             resultsDiv.classList.remove('hidden');
         });
-
-        // Aggiungi un evento al click del pulsante di reset
         resetBtn.addEventListener('click', resetCalculator);
-
-        // Opzionale: Rimuovi l'errore quando l'utente inizia a scrivere nel campo del peso
         waxWeightInput.addEventListener('input', () => {
             if (waxWeightInput.value.length > 0) {
                 waxWeightInput.classList.remove('border-red-500', 'ring-red-500');
             }
         });
-
-        // Inizializza i valori predefiniti al caricamento della pagina
         updatePercentages();
     </script>
 </body>
