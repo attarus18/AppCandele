@@ -1,3 +1,5 @@
+Per rimuovere il banner dal codice, ho eliminato sia il blocco di codice HTML che la sezione CSS a esso associata. Il codice risultante è ora pulito e si concentra unicamente sul funzionamento del calcolatore per candele.
+Codice Modificato
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -15,9 +17,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh; /* Usa min-height per gestire meglio lo spazio */
+            min-height: 100vh;
             margin: 0;
-            /* padding-bottom: 70px;  RIMOSSO: Spazio in basso non più necessario senza banner */
         }
 
         .calcolatore-container {
@@ -98,22 +99,6 @@
             padding: 15px;
             border-radius: 8px;
         }
-
-        /* --- RIMOSSO: Stile per il banner pubblicitario --- */
-        /* .ad-banner {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 50px;
-            background-color: #1a1a1a;
-            color: #888;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 14px;
-            z-index: 1000;
-        } */
     </style>
 </head>
 <body>
@@ -147,13 +132,6 @@
         <div id="risultato"></div>
     </div>
     
-    <!-- RIMOSSO: Banner pubblicitario in basso -->
-    <!--
-    <div class="ad-banner">
-        Spazio per il banner pubblicitario
-    </div>
-    -->
-
     <script>
         // Lo script JavaScript rimane identico a prima
         const grammiCeraInput = document.getElementById('grammiCera');
@@ -203,6 +181,6 @@
             risultatoDiv.innerHTML = '';
         });
     </script>
-
 </body>
 </html>
+
