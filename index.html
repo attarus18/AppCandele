@@ -17,7 +17,7 @@
             align-items: center;
             min-height: 100vh; /* Usa min-height per gestire meglio lo spazio */
             margin: 0;
-            padding-bottom: 70px; /* NUOVA AGGIUNTA: Spazio in basso per non coprire contenuti con il banner */
+            /* padding-bottom: 70px;  RIMOSSO: Spazio in basso non più necessario senza banner */
         }
 
         .calcolatore-container {
@@ -99,21 +99,21 @@
             border-radius: 8px;
         }
 
-        /* --- NUOVA AGGIUNTA: Stile per il banner pubblicitario --- */
-        .ad-banner {
-            position: fixed; /* Lo fissa in una posizione sullo schermo */
-            bottom: 0; /* Lo attacca al bordo inferiore */
-            left: 0; /* Lo allinea a sinistra */
-            width: 100%; /* Larghezza a tutto schermo */
-            height: 50px; /* Altezza standard per un banner */
-            background-color: #1a1a1a; /* Sfondo scuro per il segnaposto */
+        /* --- RIMOSSO: Stile per il banner pubblicitario --- */
+        /* .ad-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background-color: #1a1a1a;
             color: #888;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 14px;
-            z-index: 1000; /* Assicura che sia sempre in primo piano */
-        }
+            z-index: 1000;
+        } */
     </style>
 </head>
 <body>
@@ -147,9 +147,12 @@
         <div id="risultato"></div>
     </div>
     
+    <!-- RIMOSSO: Banner pubblicitario in basso -->
+    <!--
     <div class="ad-banner">
         Spazio per il banner pubblicitario
     </div>
+    -->
 
     <script>
         // Lo script JavaScript rimane identico a prima
