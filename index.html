@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calcolatore per Candele</title>
+    <title>Candle Calculator</title>
     
     <style>
-        /* CSS: La parte che si occupa dello stile e dell'aspetto */
+        /* CSS: The part that handles style and appearance */
         
         body {
             background-color: #2c2c2c;
@@ -17,7 +17,32 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
+            position: relative; /* Needed for absolute positioning of the language switcher */
         }
+
+        /* --- NEW: Language Switcher Styles --- */
+        .language-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .language-switcher label {
+            margin-right: 10px;
+            font-size: 0.9em;
+        }
+
+        .language-switcher select {
+            background-color: #505050;
+            color: #ffffff;
+            border: 1px solid #555;
+            border-radius: 5px;
+            padding: 5px;
+            cursor: pointer;
+        }
+        /* --- END NEW --- */
 
         .calcolatore-container {
             background-color: #3d3d3d;
@@ -96,90 +121,124 @@
             background-color: #2c2c2c;
             padding: 15px;
             border-radius: 8px;
+            min-height: 50px; /* Ensures container doesn't jump around */
         }
     </style>
 </head>
 <body>
+    <div class="language-switcher">
+        <label for="languageSelector" data-lang-key="languageLabel">Language:</label>
+        <select id="languageSelector">
+            <option value="en">English</option>
+            <option value="it">Italiano</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+        </select>
+    </div>
 
     <div class="calcolatore-container">
-        <h1>Calcolatore Candele</h1>
+        <h1 data-lang-key="title">Candle Calculator</h1>
         <div class="input-gruppo">
-            <label for="grammiCera">Peso finale desiderato (grammi):</label>
-            <input type="number" id="grammiCera" placeholder="Es. 100">
+            <label for="grammiCera" data-lang-key="finalWeightLabel">Desired final weight (grams):</label>
+            <input type="number" id="grammiCera" data-lang-key-placeholder="weightPlaceholder">
         </div>
         <div class="input-gruppo">
-            <label for="tipoCera">Tipo di cera:</label>
+            <label for="tipoCera" data-lang-key="waxTypeLabel">Type of wax:</label>
             <select id="tipoCera">
-                <option value="soia">Soia</option>
-                <option value="paraffina">Paraffina</option>
-                <option value="cocco">Cocco</option>
+                <option value="soia" data-lang-key="soyWax">Soy</option>
+                <option value="paraffina" data-lang-key="paraffinWax">Paraffin</option>
+                <option value="cocco" data-lang-key="coconutWax">Coconut</option>
             </select>
         </div>
         <div class="slider-container">
-            <label for="percFragranza">Percentuale di fragranza: <span id="valoreFragranza" class="slider-value">5%</span></label>
+            <label for="percFragranza"><span data-lang-key="fragrancePercentageLabel">Fragrance percentage:</span> <span id="valoreFragranza" class="slider-value">5%</span></label>
             <input type="range" id="percFragranza" class="slider" min="1" max="35" value="5">
         </div>
         <div class="slider-container">
-            <label for="percColore">Percentuale di colore: <span id="valoreColore" class="slider-value">1%</span></label>
+            <label for="percColore"><span data-lang-key="colorPercentageLabel">Color percentage:</span> <span id="valoreColore" class="slider-value">1%</span></label>
             <input type="range" id="percColore" class="slider" min="0" max="25" value="1" step="0.1">
         </div>
         <div class="tasti-container">
-            <button id="calcola">Calcola</button>
-            <button id="reset">Reset</button>
+            <button id="calcola" data-lang-key="calculateButton">Calculate</button>
+            <button id="reset" data-lang-key="resetButton">Reset</button>
         </div>
         <div id="risultato"></div>
     </div>
     
     <script>
-        const grammiCeraInput = document.getElementById('grammiCera');
-        const tipoCeraSelect = document.getElementById('tipoCera');
-        const percFragranzaSlider = document.getElementById('percFragranza');
-        const percColoreSlider = document.getElementById('percColore');
-        const valoreFragranzaSpan = document.getElementById('valoreFragranza');
-        const valoreColoreSpan = document.getElementById('valoreColore');
-        const calcolaBtn = document.getElementById('calcola');
-        const resetBtn = document.getElementById('reset');
-        const risultatoDiv = document.getElementById('risultato');
-
-        percFragranzaSlider.oninput = function() {
-            valoreFragranzaSpan.textContent = this.value + '%';
-        }
-        percColoreSlider.oninput = function() {
-            valoreColoreSpan.textContent = parseFloat(this.value).toFixed(1) + '%';
-        }
-
-        calcolaBtn.addEventListener('click', function() {
-            const pesoTotale = parseFloat(grammiCeraInput.value);
-            const fragranzaPerc = parseFloat(percFragranzaSlider.value);
-            const colorePerc = parseFloat(percColoreSlider.value);
-
-            if (isNaN(pesoTotale) || pesoTotale <= 0) {
-                risultatoDiv.innerHTML = "Per favore, inserisci un peso finale valido.";
-                return;
-            }
-
-            const percentualeTotale = 100 + fragranzaPerc + colorePerc;
-            const grammiCera = (pesoTotale * 100) / percentualeTotale;
-            const grammiFragranza = (pesoTotale * fragranzaPerc) / percentualeTotale;
-            const grammiColore = (pesoTotale * colorePerc) / percentualeTotale;
-            
-            risultatoDiv.innerHTML = `
-                Per ottenere una candela da <strong>${pesoTotale} gr</strong>, avrai bisogno di:<br>
-                <strong>${grammiCera.toFixed(2)} gr</strong> di cera<br>
-                <strong>${grammiFragranza.toFixed(2)} gr</strong> di fragranza<br>
-                <strong>${grammiColore.toFixed(2)} gr</strong> di colorante
-            `;
-        });
-        
-        resetBtn.addEventListener('click', function() {
-            grammiCeraInput.value = '';
-            tipoCeraSelect.value = 'soia';
-            percFragranzaSlider.value = 5;
-            valoreFragranzaSpan.textContent = '5%';
-            percColoreSlider.value = 1;
-            valoreColoreSpan.textContent = '1%';
-            risultatoDiv.innerHTML = '';
-        });
-    </script>
-</body>
-</html>
+        // --- NEW: Translations Object ---
+        const translations = {
+            en: {
+                title: "Candle Calculator",
+                languageLabel: "Language:",
+                finalWeightLabel: "Desired final weight (grams):",
+                weightPlaceholder: "E.g., 100",
+                waxTypeLabel: "Type of wax:",
+                soyWax: "Soy",
+                paraffinWax: "Paraffin",
+                coconutWax: "Coconut",
+                fragrancePercentageLabel: "Fragrance percentage:",
+                colorPercentageLabel: "Color percentage:",
+                calculateButton: "Calculate",
+                resetButton: "Reset",
+                invalidWeightError: "Please enter a valid final weight.",
+                resultText: `To get a candle of <strong>{pesoTotale}g</strong>, you will need:<br>
+                             <strong>{grammiCera}g</strong> of wax<br>
+                             <strong>{grammiFragranza}g</strong> of fragrance<br>
+                             <strong>{grammiColore}g</strong> of colorant`
+            },
+            it: {
+                title: "Calcolatore Candele",
+                languageLabel: "Lingua:",
+                finalWeightLabel: "Peso finale desiderato (grammi):",
+                weightPlaceholder: "Es. 100",
+                waxTypeLabel: "Tipo di cera:",
+                soyWax: "Soia",
+                paraffinWax: "Paraffina",
+                coconutWax: "Cocco",
+                fragrancePercentageLabel: "Percentuale di fragranza:",
+                colorPercentageLabel: "Percentuale di colore:",
+                calculateButton: "Calcola",
+                resetButton: "Reset",
+                invalidWeightError: "Per favore, inserisci un peso finale valido.",
+                resultText: `Per ottenere una candela da <strong>{pesoTotale} gr</strong>, avrai bisogno di:<br>
+                             <strong>{grammiCera} gr</strong> di cera<br>
+                             <strong>{grammiFragranza} gr</strong> di fragranza<br>
+                             <strong>{grammiColore} gr</strong> di colorante`
+            },
+            es: {
+                title: "Calculadora de Velas",
+                languageLabel: "Idioma:",
+                finalWeightLabel: "Peso final deseado (gramos):",
+                weightPlaceholder: "Ej. 100",
+                waxTypeLabel: "Tipo de cera:",
+                soyWax: "Soja",
+                paraffinWax: "Parafina",
+                coconutWax: "Coco",
+                fragrancePercentageLabel: "Porcentaje de fragancia:",
+                colorPercentageLabel: "Porcentaje de color:",
+                calculateButton: "Calcular",
+                resetButton: "Reiniciar",
+                invalidWeightError: "Por favor, ingrese un peso final válido.",
+                resultText: `Para obtener una vela de <strong>{pesoTotale}g</strong>, necesitarás:<br>
+                             <strong>{grammiCera}g</strong> de cera<br>
+                             <strong>{grammiFragranza}g</strong> de fragancia<br>
+                             <strong>{grammiColore}g</strong> de colorante`
+            },
+            fr: {
+                title: "Calculateur de Bougies",
+                languageLabel: "Langue:",
+                finalWeightLabel: "Poids final souhaité (grammes):",
+                weightPlaceholder: "Ex. 100",
+                waxTypeLabel: "Type de cire:",
+                soyWax: "Soja",
+                paraffinWax: "Paraffine",
+                coconutWax: "Noix de coco",
+                fragrancePercentageLabel: "Pourcentage de parfum:",
+                colorPercentageLabel: "Pourcentage de couleur:",
+                calculateButton: "Calculer",
+                resetButton: "Réinitialiser",
+                invalidWeightError: "Veuillez entrer un poids final valide.",
+                resultText: `Pour obtenir une bougie de <strong>{pesoTotale}g</strong>, vous aurez besoin de:<br>
+                             <strong>{grammi
