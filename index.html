@@ -4,179 +4,64 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WAX PRO – Candle Calculator</title>
-
 <style>
-    /* ==== Stile di base ==== */
-    :root {
-        --main-bg: #2c2c2c;
-        --panel-bg: #3d3d3d;
-        --accent: #ffa500;
-        --text: #ffffff;
-    }
-
-    body {
-        background-color: var(--main-bg);
-        color: var(--text);
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        margin: 0;
-        padding: 20px;
-    }
-
-    .calcolatore-container {
-        background-color: var(--panel-bg);
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-        width: 100%;
-        max-width: 500px;
-        position: relative;
-        box-sizing: border-box;
-    }
-
-    /* Titolo principale */
-    .main-title {
-        text-align: center;
-        font-size: 2.2em;
-        font-weight: bold;
-        color: var(--accent);
-        margin-bottom: 10px;
-        letter-spacing: 2px;
-        word-wrap: break-word;
-    }
-
-    /* Selettore lingua */
-    .language-selector {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-    }
-    .language-selector select {
-        background-color: #505050;
-        color: #fff;
-        border: 1px solid #555;
-        border-radius: 5px;
-        padding: 5px;
-        font-size: 0.9rem;
-        cursor: pointer;
-    }
-
-    h1 {
-        text-align: center;
-        color: var(--accent);
-        margin-bottom: 25px;
-        font-size: 1.5em;
-    }
-
-    .input-gruppo label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: bold;
-        font-size: 1rem;
-    }
-
-    .input-gruppo input,
-    .input-gruppo select {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 20px;
-        border-radius: 8px;
-        border: 1px solid #555;
-        background-color: #505050;
-        color: var(--text);
-        box-sizing: border-box;
-        font-size: 1rem;
-    }
-
-    .slider-container {
-        margin-bottom: 20px;
-    }
-    .slider {
-        width: 100%;
-        cursor: pointer;
-    }
-    .slider-value {
-        color: var(--accent);
-        font-weight: bold;
-    }
-
-    .tasti-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 10px;
-        margin-top: 20px;
-    }
-
-    button {
-        flex: 1 1 45%;
-        padding: 12px 20px;
-        border: none;
-        border-radius: 8px;
-        background-color: var(--accent);
-        color: var(--main-bg);
-        font-size: 1rem;
-        font-weight: bold;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-    button:hover {
-        background-color: #ffc14d;
-    }
-
-    #risultato {
-        margin-top: 25px;
-        text-align: center;
-        font-size: 1.1em;
-        background-color: var(--main-bg);
-        padding: 15px;
-        border-radius: 8px;
-        word-wrap: break-word;
-    }
-
-    /* ==== Media Queries per schermi piccoli ==== */
-    @media (max-width: 480px) {
-        body {
-            padding: 10px;
-        }
-
-        .calcolatore-container {
-            padding: 20px;
-        }
-
-        .main-title {
-            font-size: 1.8em;
-        }
-
-        h1 {
-            font-size: 1.3em;
-        }
-
-        .input-gruppo label {
-            font-size: 0.95rem;
-        }
-
-        button {
-            font-size: 0.95rem;
-            padding: 10px;
-        }
-
-        .language-selector {
-            top: 5px;
-            right: 5px;
-        }
-        .language-selector select {
-            font-size: 0.8rem;
-            padding: 4px;
-        }
-    }
+:root {
+    --main-bg: #2c2c2c;
+    --panel-bg: #3d3d3d;
+    --accent: #ffa500;
+    --text: #ffffff;
+}
+body {
+    background: var(--main-bg);
+    color: var(--text);
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    display:flex;justify-content:center;align-items:center;
+    min-height:100vh;margin:0;padding:20px;
+}
+.calcolatore-container {
+    background: var(--panel-bg);
+    padding:30px;border-radius:15px;
+    width:100%;max-width:500px;box-sizing:border-box;
+    position:relative;box-shadow:0 4px 15px rgba(0,0,0,.5);
+}
+.main-title {
+    text-align:center;font-size:2.2em;font-weight:bold;
+    color:var(--accent);margin-bottom:10px;letter-spacing:2px;
+}
+.language-selector {position:absolute;top:10px;right:10px;}
+.language-selector select,
+.input-gruppo select,
+.input-gruppo input {
+    background:#505050;color:#fff;border:1px solid #555;
+    border-radius:8px;padding:10px;width:100%;box-sizing:border-box;
+    margin-bottom:20px;font-size:1rem;
+}
+.input-gruppo label {
+    display:block;margin-bottom:8px;font-weight:bold;
+}
+.slider-container{margin-bottom:20px;}
+.slider{width:100%;cursor:pointer;}
+.slider-value{color:var(--accent);font-weight:bold;}
+.tasti-container{
+    display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;margin-top:20px;
+}
+button{
+    flex:1 1 45%;padding:12px 20px;border:none;border-radius:8px;
+    background:var(--accent);color:var(--main-bg);
+    font-size:1rem;font-weight:bold;cursor:pointer;
+}
+button:hover{background:#ffc14d;}
+#risultato{
+    margin-top:25px;text-align:center;font-size:1.1em;
+    background:var(--main-bg);padding:15px;border-radius:8px;
+}
+@media(max-width:480px){
+    .main-title{font-size:1.8em;}
+    button{font-size:.95rem;padding:10px;}
+}
 </style>
 </head>
 <body>
-
 <div class="calcolatore-container">
     <div class="language-selector">
         <select id="language">
@@ -192,17 +77,20 @@
     <h1 id="title">Candle Calculator</h1>
 
     <div class="input-gruppo">
-        <label for="grammiCera" id="labelPeso">Desired final weight (grams):</label>
-        <input type="number" id="grammiCera" placeholder="e.g. 100">
-    </div>
-    <div class="input-gruppo">
-        <label for="tipoCera" id="labelTipo">Wax type:</label>
-        <select id="tipoCera">
-            <option value="soia">Soy</option>
-            <option value="paraffina">Paraffin</option>
-            <option value="cocco">Coconut</option>
+        <label for="unitSelect" id="labelUnit">Unit:</label>
+        <select id="unitSelect">
+            <option value="g" selected>g</option>
+            <option value="kg">kg</option>
+            <option value="lb">lb</option>
+            <option value="oz">oz</option>
         </select>
     </div>
+
+    <div class="input-gruppo">
+        <label for="pesoInput" id="labelPeso">Desired final weight:</label>
+        <input type="number" id="pesoInput" placeholder="e.g. 100">
+    </div>
+
     <div class="slider-container">
         <label for="percFragranza" id="labelFragranza">Fragrance percentage:
             <span id="valoreFragranza" class="slider-value">5%</span>
@@ -215,6 +103,7 @@
         </label>
         <input type="range" id="percColore" class="slider" min="0" max="25" value="1" step="0.1">
     </div>
+
     <div class="tasti-container">
         <button id="calcola">Calculate</button>
         <button id="reset">Reset</button>
@@ -223,158 +112,94 @@
 </div>
 
 <script>
-/* === Traduzioni === */
 const translations = {
-    en: {
-        title: "Candle Calculator",
-        peso: "Desired final weight (grams):",
-        tipo: "Wax type:",
-        fragranza: "Fragrance percentage:",
-        colore: "Color percentage:",
-        calcola: "Calculate",
-        reset: "Reset",
-        errore: "Please enter a valid final weight.",
-        risultato: (peso, cera, frag, color) =>
-            `To obtain a candle of <strong>${peso} g</strong>, you need:<br>
-             <strong>${cera.toFixed(2)} g</strong> of wax<br>
-             <strong>${frag.toFixed(2)} g</strong> of fragrance<br>
-             <strong>${color.toFixed(2)} g</strong> of dye`
-    },
-    it: {
-        title: "Calcolatore Candele",
-        peso: "Peso finale desiderato (grammi):",
-        tipo: "Tipo di cera:",
-        fragranza: "Percentuale di fragranza:",
-        colore: "Percentuale di colore:",
-        calcola: "Calcola",
-        reset: "Reset",
-        errore: "Per favore, inserisci un peso finale valido.",
-        risultato: (peso, cera, frag, color) =>
-            `Per ottenere una candela da <strong>${peso} gr</strong>, avrai bisogno di:<br>
-             <strong>${cera.toFixed(2)} gr</strong> di cera<br>
-             <strong>${frag.toFixed(2)} gr</strong> di fragranza<br>
-             <strong>${color.toFixed(2)} gr</strong> di colorante`
-    },
-    fr: {
-        title: "Calculateur de Bougies",
-        peso: "Poids final souhaité (grammes) :",
-        tipo: "Type de cire :",
-        fragranza: "Pourcentage de parfum :",
-        colore: "Pourcentage de couleur :",
-        calcola: "Calculer",
-        reset: "Réinitialiser",
-        errore: "Veuillez saisir un poids final valide.",
-        risultato: (peso, cera, frag, color) =>
-            `Pour obtenir une bougie de <strong>${peso} g</strong>, vous aurez besoin de :<br>
-             <strong>${cera.toFixed(2)} g</strong> de cire<br>
-             <strong>${frag.toFixed(2)} g</strong> de parfum<br>
-             <strong>${color.toFixed(2)} g</strong> de colorant`
-    },
-    de: {
-        title: "Kerzenrechner",
-        peso: "Gewünschtes Endgewicht (Gramm):",
-        tipo: "Wachsart:",
-        fragranza: "Duftanteil (%):",
-        colore: "Farbanteil (%):",
-        calcola: "Berechnen",
-        reset: "Zurücksetzen",
-        errore: "Bitte gib ein gültiges Endgewicht ein.",
-        risultato: (peso, cera, frag, color) =>
-            `Für eine Kerze von <strong>${peso} g</strong> benötigen Sie:<br>
-             <strong>${cera.toFixed(2)} g</strong> Wachs<br>
-             <strong>${frag.toFixed(2)} g</strong> Duft<br>
-             <strong>${color.toFixed(2)} g</strong> Farbstoff`
-    },
-    es: {
-        title: "Calculadora de Velas",
-        peso: "Peso final deseado (gramos):",
-        tipo: "Tipo de cera:",
-        fragranza: "Porcentaje de fragancia:",
-        colore: "Porcentaje de color:",
-        calcola: "Calcular",
-        reset: "Restablecer",
-        errore: "Por favor, introduce un peso final válido.",
-        risultato: (peso, cera, frag, color) =>
-            `Para obtener una vela de <strong>${peso} g</strong>, necesitas:<br>
-             <strong>${cera.toFixed(2)} g</strong> de cera<br>
-             <strong>${frag.toFixed(2)} g</strong> de fragancia<br>
-             <strong>${color.toFixed(2)} g</strong> de colorante`
-    }
+  en:{title:"Candle Calculator",unit:"Unit:",peso:"Desired final weight:",frag:"Fragrance percentage:",col:"Color percentage:",
+      calc:"Calculate",reset:"Reset",err:"Please enter a valid weight.",
+      res:(p,u,c,f,k)=>`To obtain a candle of <strong>${p} ${u}</strong>, you need:<br>
+                        <strong>${c.toFixed(2)} ${u}</strong> of wax<br>
+                        <strong>${f.toFixed(2)} ${u}</strong> of fragrance<br>
+                        <strong>${k.toFixed(2)} ${u}</strong> of dye`},
+  it:{title:"Calcolatore Candele",unit:"Unità:",peso:"Peso finale desiderato:",frag:"Percentuale di fragranza:",col:"Percentuale di colore:",
+      calc:"Calcola",reset:"Reset",err:"Inserisci un peso valido.",
+      res:(p,u,c,f,k)=>`Per una candela da <strong>${p} ${u}</strong> servono:<br>
+                        <strong>${c.toFixed(2)} ${u}</strong> di cera<br>
+                        <strong>${f.toFixed(2)} ${u}</strong> di fragranza<br>
+                        <strong>${k.toFixed(2)} ${u}</strong> di colorante`},
+  fr:{title:"Calculateur de Bougies",unit:"Unité :",peso:"Poids final souhaité :",frag:"Pourcentage de parfum :",col:"Pourcentage de couleur :",
+      calc:"Calculer",reset:"Réinitialiser",err:"Veuillez saisir un poids valide.",
+      res:(p,u,c,f,k)=>`Pour une bougie de <strong>${p} ${u}</strong>, il faut :<br>
+                        <strong>${c.toFixed(2)} ${u}</strong> de cire<br>
+                        <strong>${f.toFixed(2)} ${u}</strong> de parfum<br>
+                        <strong>${k.toFixed(2)} ${u}</strong> de colorant`},
+  de:{title:"Kerzenrechner",unit:"Einheit:",peso:"Gewünschtes Endgewicht:",frag:"Duftanteil (%):",col:"Farbanteil (%):",
+      calc:"Berechnen",reset:"Zurücksetzen",err:"Bitte gültiges Gewicht eingeben.",
+      res:(p,u,c,f,k)=>`Für eine Kerze von <strong>${p} ${u}</strong> benötigen Sie:<br>
+                        <strong>${c.toFixed(2)} ${u}</strong> Wachs<br>
+                        <strong>${f.toFixed(2)} ${u}</strong> Duft<br>
+                        <strong>${k.toFixed(2)} ${u}</strong> Farbstoff`},
+  es:{title:"Calculadora de Velas",unit:"Unidad:",peso:"Peso final deseado:",frag:"Porcentaje de fragancia:",col:"Porcentaje de color:",
+      calc:"Calcular",reset:"Restablecer",err:"Introduce un peso válido.",
+      res:(p,u,c,f,k)=>`Para una vela de <strong>${p} ${u}</strong> necesitas:<br>
+                        <strong>${c.toFixed(2)} ${u}</strong> de cera<br>
+                        <strong>${f.toFixed(2)} ${u}</strong> de fragancia<br>
+                        <strong>${k.toFixed(2)} ${u}</strong> de colorante`}
 };
 
-const langSelect = document.getElementById('language');
-const titleEl = document.getElementById('title');
-const labelPeso = document.getElementById('labelPeso');
-const labelTipo = document.getElementById('labelTipo');
-const labelFrag = document.getElementById('labelFragranza');
-const labelCol = document.getElementById('labelColore');
-const calcolaBtn = document.getElementById('calcola');
-const resetBtn = document.getElementById('reset');
-const risultatoDiv = document.getElementById('risultato');
+const els = {
+  lang:document.getElementById('language'),
+  unit:document.getElementById('unitSelect'),
+  title:document.getElementById('title'),
+  labelUnit:document.getElementById('labelUnit'),
+  labelPeso:document.getElementById('labelPeso'),
+  labelFrag:document.getElementById('labelFragranza'),
+  labelCol:document.getElementById('labelColore'),
+  calc:document.getElementById('calcola'),
+  reset:document.getElementById('reset'),
+  peso:document.getElementById('pesoInput'),
+  fragSlider:document.getElementById('percFragranza'),
+  colSlider:document.getElementById('percColore'),
+  valFrag:document.getElementById('valoreFragranza'),
+  valCol:document.getElementById('valoreColore'),
+  result:document.getElementById('risultato')
+};
 
-function updateLanguage(lang) {
-    const t = translations[lang];
-    titleEl.textContent = t.title;
-    labelPeso.textContent = t.peso;
-    labelTipo.textContent = t.tipo;
-    labelFrag.childNodes[0].textContent = t.fragranza + " ";
-    labelCol.childNodes[0].textContent = t.colore + " ";
-    calcolaBtn.textContent = t.calcola;
-    resetBtn.textContent = t.reset;
+function updateLang(l){
+  const t=translations[l];
+  els.title.textContent=t.title;
+  els.labelUnit.textContent=t.unit;
+  els.labelPeso.textContent=t.peso;
+  els.labelFrag.childNodes[0].textContent=t.frag+" ";
+  els.labelCol.childNodes[0].textContent=t.col+" ";
+  els.calc.textContent=t.calc;
+  els.reset.textContent=t.reset;
 }
-langSelect.addEventListener('change', () => updateLanguage(langSelect.value));
+els.lang.addEventListener('change',()=>updateLang(els.lang.value));
+updateLang('en');
 
-// Slider update
-const percFragranzaSlider = document.getElementById('percFragranza');
-const percColoreSlider = document.getElementById('percColore');
-const valoreFragranzaSpan = document.getElementById('valoreFragranza');
-const valoreColoreSpan = document.getElementById('valoreColore');
+els.fragSlider.oninput=()=>els.valFrag.textContent=els.fragSlider.value+'%';
+els.colSlider.oninput=()=>els.valCol.textContent=parseFloat(els.colSlider.value).toFixed(1)+'%';
 
-percFragranzaSlider.oninput = function() {
-    valoreFragranzaSpan.textContent = this.value + '%';
-};
-percColoreSlider.oninput = function() {
-    valoreColoreSpan.textContent = parseFloat(this.value).toFixed(1) + '%';
-};
-
-// Calcolo
-const grammiCeraInput = document.getElementById('grammiCera');
-const tipoCeraSelect = document.getElementById('tipoCera');
-
-calcolaBtn.addEventListener('click', function() {
-    const lang = langSelect.value;
-    const t = translations[lang];
-    const pesoTotale = parseFloat(grammiCeraInput.value);
-    const fragranzaPerc = parseFloat(percFragranzaSlider.value);
-    const colorePerc = parseFloat(percColoreSlider.value);
-
-    if (isNaN(pesoTotale) || pesoTotale <= 0) {
-        risultatoDiv.innerHTML = t.errore;
-        return;
-    }
-
-    const percentualeTotale = 100 + fragranzaPerc + colorePerc;
-    const grammiCera = (pesoTotale * 100) / percentualeTotale;
-    const grammiFragranza = (pesoTotale * fragranzaPerc) / percentualeTotale;
-    const grammiColore = (pesoTotale * colorePerc) / percentualeTotale;
-
-    risultatoDiv.innerHTML = t.risultato(pesoTotale, grammiCera, grammiFragranza, grammiColore);
+els.calc.addEventListener('click',()=>{
+  const t=translations[els.lang.value];
+  const unit=els.unit.value;
+  const weight=parseFloat(els.peso.value);
+  if(isNaN(weight)||weight<=0){els.result.innerHTML=t.err;return;}
+  const f=parseFloat(els.fragSlider.value);
+  const c=parseFloat(els.colSlider.value);
+  const total=100+f+c;
+  const wax = (weight*100)/total;
+  const frag = (weight*f)/total;
+  const color = (weight*c)/total;
+  els.result.innerHTML=t.res(weight,unit,wax,frag,color);
 });
 
-// Reset
-resetBtn.addEventListener('click', function() {
-    grammiCeraInput.value = '';
-    tipoCeraSelect.value = 'soia';
-    percFragranzaSlider.value = 5;
-    valoreFragranzaSpan.textContent = '5%';
-    percColoreSlider.value = 1;
-    valoreColoreSpan.textContent = '1%';
-    risultatoDiv.innerHTML = '';
+els.reset.addEventListener('click',()=>{
+  els.peso.value='';
+  els.unit.value='g';
+  els.fragSlider.value=5; els.valFrag.textContent='5%';
+  els.colSlider.value=1; els.valCol.textContent='1%';
+  els.result.innerHTML='';
 });
-
-// Lingua di default: inglese
-updateLanguage('en');
 </script>
-
 </body>
 </html>
