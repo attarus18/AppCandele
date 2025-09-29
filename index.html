@@ -53,11 +53,11 @@ select{
 
 <script>
 const t={
-  en:{calc:"Candle Calculator",cost:"Production Cost"},
-  it:{calc:"Calcolatore Candele",cost:"Costo di Produzione"},
-  fr:{calc:"Calculateur de Bougies",cost:"Coût de Production"},
-  de:{calc:"Kerzenrechner",cost:"Herstellungskosten"},
-  es:{calc:"Calculadora de Velas",cost:"Costo de Producción"}
+  en:{calc:"Candle Calculator",cost:"Production Cost",lang:["English","Italiano","Français","Deutsch","Español"]},
+  it:{calc:"Calcolatore Candele",cost:"Costo di Produzione",lang:["Inglese","Italiano","Francese","Tedesco","Spagnolo"]},
+  fr:{calc:"Calculateur de Bougies",cost:"Coût de Production",lang:["Anglais","Italien","Français","Allemand","Espagnol"]},
+  de:{calc:"Kerzenrechner",cost:"Herstellungskosten",lang:["Englisch","Italienisch","Französisch","Deutsch","Spanisch"]},
+  es:{calc:"Calculadora de Velas",cost:"Costo de Producción",lang:["Inglés","Italiano","Francés","Alemán","Español"]}
 };
 
 const langSel=document.getElementById('language');
@@ -67,7 +67,12 @@ const btnCost=document.getElementById('btnCost');
 function applyLang(l){
   btnCalc.textContent=t[l].calc;
   btnCost.textContent=t[l].cost;
+  // Aggiorna le label delle lingue
+  for(let i=0;i<langSel.options.length;i++){
+    langSel.options[i].textContent=t[l].lang[i];
+  }
 }
+
 function setLang(l){
   localStorage.setItem('wax_lang',l);
   applyLang(l);
@@ -80,8 +85,8 @@ const saved=localStorage.getItem('wax_lang')||'en';
 langSel.value=saved;
 applyLang(saved);
 
-btnCalc.onclick=()=>location.href='calcolatore.html';
-btnCost.onclick=()=>location.href='costo.html';
+btnCalc.addEventListener('click',()=>location.href='calcolatore.html');
+btnCost.addEventListener('click',()=>location.href='costo.html');
 </script>
 </body>
 </html>
