@@ -3,126 +3,85 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WAX PRO – Home</title>
+<title>WAX PRO</title>
 <style>
 :root{
-  --main-bg:#2c2c2c;
-  --panel-bg:#3d3d3d;
-  --accent:#ffa500;
-  --text:#ffffff;
+  --main-bg:#2c2c2c;--panel-bg:#3d3d3d;--accent:#ffa500;--text:#ffffff;
 }
 body{
-  background:var(--main-bg);
-  color:var(--text);
-  font-family:'Segoe UI',Tahoma,sans-serif;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-  margin:0;
+  background:var(--main-bg);color:var(--text);
+  font-family:'Segoe UI',Tahoma,sans-serif;
+  display:flex;justify-content:center;align-items:center;
+  min-height:100vh;margin:0;padding:20px;
 }
 .container{
-  background:var(--panel-bg);
-  padding:40px 30px;
-  border-radius:15px;
-  width:100%;
-  max-width:400px;
-  text-align:center;
-  box-shadow:0 4px 15px rgba(0,0,0,.5);
-  box-sizing:border-box;
+  background:var(--panel-bg);padding:40px 30px;border-radius:15px;
+  text-align:center;max-width:400px;width:100%;
+  box-shadow:0 4px 15px rgba(0,0,0,.5);
 }
-h1{color:var(--accent);margin-bottom:25px;}
-.btn{
-  display:block;
-  width:100%;
-  margin:15px 0;
-  padding:14px;
-  background:var(--accent);
-  color:var(--main-bg);
-  border:none;
-  border-radius:10px;
-  font-weight:bold;
-  font-size:1.1rem;
-  cursor:pointer;
-  text-decoration:none;
-  transition:background .3s;
+h1{color:var(--accent);margin-bottom:20px;font-size:2.4em;}
+button{
+  width:100%;padding:15px;margin-top:15px;
+  border:none;border-radius:10px;
+  background:var(--accent);color:var(--main-bg);
+  font-size:1.2rem;font-weight:bold;cursor:pointer;
+  transition:background .3s;
 }
-.btn:hover{background:#ffc14d;}
+button:hover{background:#ffc14d;}
 select{
-  background:#505050;
-  color:#fff;
-  border:1px solid #555;
-  border-radius:8px;
-  padding:10px;
-  font-size:1rem;
-  margin-bottom:25px;
-  width:100%;
+  margin-top:20px;width:100%;padding:10px;
+  background:#505050;color:#fff;border:1px solid #555;
+  border-radius:8px;font-size:1rem;
 }
 </style>
 </head>
 <body>
 <div class="container">
-  <h1 id="title">WAX PRO</h1>
+  <h1>WAX PRO</h1>
 
-  <select id="language">
-    <option value="en" selected>English</option>
-    <option value="it">Italiano</option>
-    <option value="fr">Français</option>
-    <option value="de">Deutsch</option>
-    <option value="es">Español</option>
-  </select>
+  <button id="btnCalc">Candle Calculator</button>
+  <button id="btnCost">Production Cost</button>
 
-  <a href="calcolo.html" class="btn" id="calcBtn">Candle Calculator</a>
-  <a href="costo.html" class="btn" id="costBtn">Production Cost</a>
+  <select id="language">
+    <option value="en">English</option>
+    <option value="it">Italiano</option>
+    <option value="fr">Français</option>
+    <option value="de">Deutsch</option>
+    <option value="es">Español</option>
+  </select>
 </div>
 
 <script>
-const translations = {
-  en: {
-    title: "WAX PRO",
-    calcBtn: "Candle Calculator",
-    costBtn: "Production Cost"
-  },
-  it: {
-    title: "WAX PRO",
-    calcBtn: "Calcolatrice Candele",
-    costBtn: "Costo di Produzione"
-  },
-  fr: {
-    title: "WAX PRO",
-    calcBtn: "Calculateur de Bougies",
-    costBtn: "Coût de Production"
-  },
-  de: {
-    title: "WAX PRO",
-    calcBtn: "Kerzenrechner",
-    costBtn: "Produktionskosten"
-  },
-  es: {
-    title: "WAX PRO",
-    calcBtn: "Calculadora de Velas",
-    costBtn: "Costo de Producción"
-  }
+const t={
+  en:{calc:"Candle Calculator",cost:"Production Cost"},
+  it:{calc:"Calcolatore Candele",cost:"Costo di Produzione"},
+  fr:{calc:"Calculateur de Bougies",cost:"Coût de Production"},
+  de:{calc:"Kerzenrechner",cost:"Herstellungskosten"},
+  es:{calc:"Calculadora de Velas",cost:"Costo de Producción"}
 };
 
-function applyLanguage(lang) {
-  const t = translations[lang] || translations.en;
-  document.getElementById('title').textContent = t.title;
-  document.getElementById('calcBtn').textContent = t.calcBtn;
-  document.getElementById('costBtn').textContent = t.costBtn;
+const langSel=document.getElementById('language');
+const btnCalc=document.getElementById('btnCalc');
+const btnCost=document.getElementById('btnCost');
+
+function applyLang(l){
+  btnCalc.textContent=t[l].calc;
+  btnCost.textContent=t[l].cost;
+}
+function setLang(l){
+  localStorage.setItem('wax_lang',l);
+  applyLang(l);
 }
 
-const langSelect = document.getElementById('language');
-const savedLang = localStorage.getItem('waxLang') || 'en';
+langSel.addEventListener('change',()=>setLang(langSel.value));
 
-langSelect.value = savedLang;
-// 🟢 QUESTA È LA RIGA AGGIUNTA PER APPLICARE LA LINGUA SALVATA ALL'AVVIO
-applyLanguage(savedLang); 
+// Al primo caricamento usa la lingua salvata o inglese
+const saved=localStorage.getItem('wax_lang')||'en';
+langSel.value=saved;
+applyLang(saved);
 
-langSelect.addEventListener('change', () => {
-  localStorage.setItem('waxLang', langSelect.value);
-  applyLanguage(langSelect.value);
-});
+btnCalc.onclick=()=>location.href='calcolatore.html';
+btnCost.onclick=()=>location.href='costo.html';
 </script>
 </body>
 </html>
