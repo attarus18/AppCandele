@@ -12,130 +12,161 @@
   --text:#ffffff;
 }
 body{
-  margin:0;
-  padding:20px;
-  min-height:100vh;
   background:var(--main-bg);
   color:var(--text);
   font-family:'Segoe UI',Tahoma,sans-serif;
   display:flex;
   justify-content:center;
   align-items:center;
+  height:100vh;
+  margin:0;
 }
 .container{
-  position:relative;
-  width:100%;
-  max-width:450px;
-  padding:40px 30px;
   background:var(--panel-bg);
+  padding:40px 30px;
   border-radius:15px;
+  width:100%;
+  max-width:400px;
+  text-align:center;
   box-shadow:0 4px 15px rgba(0,0,0,.5);
   box-sizing:border-box;
 }
-h1{
-  text-align:center;
-  color:var(--accent);
-  margin:0 0 25px 0;
-  letter-spacing:1px;
+h1{color:var(--accent);margin-bottom:25px;}
+.btn{
+  display:block;
+  width:100%;
+  margin:15px 0;
+  padding:14px;
+  background:var(--accent);
+  color:var(--main-bg);
+  border:none;
+  border-radius:10px;
+  font-weight:bold;
+  font-size:1.1rem;
+  cursor:pointer;
+  text-decoration:none;
+  transition:background .3s;
+}
+.btn:hover{background:#ffc14d;}
+select{
+  background:#505050;
+  color:#fff;
+  border:1px solid #555;
+  border-radius:8px;
+  padding:10px;
+  font-size:1rem;
+  margin-bottom:25px;
+  width:100%;
+}
+input{
+  width:100%;
+  padding:10px;
+  margin-bottom:15px;
+  border-radius:8px;
+  border:1px solid #555;
+  font-size:1rem;
 }
 label{
   display:block;
+  margin-bottom:8px;
   margin-top:15px;
-  font-weight:bold;
-}
-input[type="number"]{
-  width:100%;
-  padding:10px;
-  margin-top:5px;
-  border-radius:8px;
-  border:1px solid #555;
-  background:#505050;
-  color:#fff;
-  font-size:1rem;
-  box-sizing:border-box;
-}
-.actions{
-  display:flex;
-  justify-content:space-between;
-  margin-top:25px;
-}
-button{
-  width:48%;
-  padding:12px;
-  border:none;
-  border-radius:8px;
-  background:var(--accent);
-  color:var(--main-bg);
-  font-weight:bold;
-  font-size:1rem;
-  cursor:pointer;
-  transition:background .3s;
-}
-button:hover{background:#ffc14d;}
-#result{
-  margin-top:25px;
-  background:var(--main-bg);
-  padding:15px;
-  border-radius:8px;
-  text-align:center;
-  font-size:1.1em;
-}
-.home-btn{
-  position:absolute;
-  top:10px;
-  left:10px;
-  background:var(--accent);
-  color:var(--main-bg);
-  padding:8px 15px;
-  border-radius:8px;
-  text-decoration:none;
-  font-weight:bold;
-  transition:background .3s;
-}
-.home-btn:hover{background:#ffc14d;}
-@media(max-width:480px){
-  h1{font-size:1.8em;}
-  button{font-size:.95rem;padding:10px;}
+  text-align:left;
 }
 </style>
 </head>
 <body>
 <div class="container">
-  <a href="index.html" class="home-btn">Home</a>
   <h1 id="title">Production Cost</h1>
 
-  <label for="wax">Cera (€)</label>
-  <input type="number" id="wax" step="0.01">
+  <select id="language">
+    <option value="en">English</option>
+    <option value="it">Italiano</option>
+    <option value="fr">Français</option>
+    <option value="de">Deutsch</option>
+    <option value="es">Español</option>
+  </select>
 
-  <label for="wick">Stoppino (€)</label>
-  <input type="number" id="wick" step="0.01">
+  <label id="labelWax" for="wax">Wax Needed (g):</label>
+  <input type="number" id="wax" placeholder="e.g. 1500">
 
-  <label for="container">Contenitore (€)</label>
-  <input type="number" id="container" step="0.01">
+  <label id="labelPrice" for="price">Wax Price per Kg (€):</label>
+  <input type="number" id="price" step="0.01" placeholder="e.g. 7.50">
 
-  <label for="fragrance">Fragranza (€)</label>
-  <input type="number" id="fragrance" step="0.01">
-
-  <label for="color">Colorante (€)</label>
-  <input type="number" id="color" step="0.01">
-
-  <label for="shipping">Spedizione (€)</label>
-  <input type="number" id="shipping" step="0.01">
-
-  <div class="actions">
-    <button id="calc">Calculate</button>
-    <button id="reset">Reset</button>
-  </div>
-
+  <button class="btn" id="calcBtn">Calculate Cost</button>
   <div id="result"></div>
+  <a href="index.html" class="btn" id="homeBtn">Back to Home</a>
 </div>
 
 <script>
-const lang = localStorage.getItem('waxLang') || 'en';
-const texts = {
-  en:{title:"Production Cost",calc:"Calculate",reset:"Reset",
-      total: t=>`Total production cost: € ${t}`},
-  it:{title:"Costo di Produzione",calc:"Calcola",reset:"Reset",
-      total: t=>`Costo totale di produzione: € ${t}`},
-  fr:{title:"Coût de Production",calc:"Calculer",reset:"Réinitialiser",
-      total: t=>`Coût total de production : €
+const translations = {
+  en: {
+    title: "Production Cost",
+    labelWax: "Wax Needed (g):",
+    labelPrice: "Wax Price per Kg (€):",
+    calcBtn: "Calculate Cost",
+    homeBtn: "Back to Home",
+    result: (cost) => `Total cost: <strong>€${cost.toFixed(2)}</strong>`
+  },
+  it: {
+    title: "Costo di Produzione",
+    labelWax: "Cera Necessaria (g):",
+    labelPrice: "Prezzo Cera al Kg (€):",
+    calcBtn: "Calcola Costo",
+    homeBtn: "Torna alla Home",
+    result: (cost) => `Costo totale: <strong>€${cost.toFixed(2)}</strong>`
+  },
+  fr: {
+    title: "Coût de Production",
+    labelWax: "Cire nécessaire (g) :",
+    labelPrice: "Prix de la cire par Kg (€) :",
+    calcBtn: "Calculer le coût",
+    homeBtn: "Retour à l'accueil",
+    result: (cost) => `Coût total : <strong>€${cost.toFixed(2)}</strong>`
+  },
+  de: {
+    title: "Produktionskosten",
+    labelWax: "Benötigtes Wachs (g):",
+    labelPrice: "Wachspreis pro Kg (€):",
+    calcBtn: "Kosten berechnen",
+    homeBtn: "Zurück zur Startseite",
+    result: (cost) => `Gesamtkosten: <strong>€${cost.toFixed(2)}</strong>`
+  },
+  es: {
+    title: "Costo de Producción",
+    labelWax: "Cera Necesaria (g):",
+    labelPrice: "Precio de la cera por Kg (€):",
+    calcBtn: "Calcular Costo",
+    homeBtn: "Volver al Inicio",
+    result: (cost) => `Costo total: <strong>€${cost.toFixed(2)}</strong>`
+  }
+};
+
+function applyLanguage(lang) {
+  const t = translations[lang] || translations.en;
+  document.getElementById('title').textContent = t.title;
+  document.getElementById('labelWax').textContent = t.labelWax;
+  document.getElementById('labelPrice').textContent = t.labelPrice;
+  document.getElementById('calcBtn').textContent = t.calcBtn;
+  document.getElementById('homeBtn').textContent = t.homeBtn;
+}
+
+const langSelect = document.getElementById('language');
+const savedLang = localStorage.getItem('waxLang') || 'en';
+langSelect.value = savedLang;
+applyLanguage(savedLang);
+
+langSelect.addEventListener('change', () => {
+  localStorage.setItem('waxLang', langSelect.value);
+  applyLanguage(langSelect.value);
+});
+
+document.getElementById('calcBtn').addEventListener('click', () => {
+  const wax = parseFloat(document.getElementById('wax').value) || 0;
+  const price = parseFloat(document.getElementById('price').value) || 0;
+  const cost = (wax / 1000) * price;
+  const lang = langSelect.value;
+  document.getElementById('result').innerHTML = translations[lang].result(cost);
+});
+</script>
+</body>
+</html>
