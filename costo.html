@@ -5,168 +5,73 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WAX PRO – Production Cost</title>
 <style>
-:root{
-  --main-bg:#2c2c2c;
-  --panel-bg:#3d3d3d;
-  --accent:#ffa500;
-  --text:#ffffff;
-}
-body{
-  background:var(--main-bg);
-  color:var(--text);
-  font-family:'Segoe UI',Tahoma,sans-serif;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-  margin:0;
-}
-.container{
-  background:var(--panel-bg);
-  padding:40px 30px;
-  border-radius:15px;
-  width:100%;
-  max-width:400px;
-  text-align:center;
-  box-shadow:0 4px 15px rgba(0,0,0,.5);
-  box-sizing:border-box;
-}
-h1{color:var(--accent);margin-bottom:25px;}
-.btn{
-  display:block;
-  width:100%;
-  margin:15px 0;
-  padding:14px;
-  background:var(--accent);
-  color:var(--main-bg);
-  border:none;
-  border-radius:10px;
-  font-weight:bold;
-  font-size:1.1rem;
-  cursor:pointer;
-  text-decoration:none;
-  transition:background .3s;
-}
-.btn:hover{background:#ffc14d;}
-select{
-  background:#505050;
-  color:#fff;
-  border:1px solid #555;
-  border-radius:8px;
-  padding:10px;
-  font-size:1rem;
-  margin-bottom:25px;
-  width:100%;
-}
-input{
-  width:100%;
-  padding:10px;
-  margin-bottom:15px;
-  border-radius:8px;
-  border:1px solid #555;
-  font-size:1rem;
-}
-label{
-  display:block;
-  margin-bottom:8px;
-  margin-top:15px;
-  text-align:left;
-}
+:root{--main-bg:#2c2c2c;--panel-bg:#3d3d3d;--accent:#ffa500;--text:#ffffff;}
+body{background:var(--main-bg);color:var(--text);font-family:'Segoe UI',Tahoma,sans-serif;
+     display:flex;justify-content:center;align-items:center;min-height:100vh;margin:0;padding:20px;}
+.container{background:var(--panel-bg);padding:40px 30px;border-radius:15px;
+          width:100%;max-width:500px;box-shadow:0 4px 15px rgba(0,0,0,.5);}
+h1{color:var(--accent);text-align:center;margin-bottom:20px;font-size:2em;}
+input{background:#505050;color:#fff;border:1px solid #555;border-radius:8px;
+      padding:10px;width:100%;margin-bottom:15px;}
+button{width:48%;padding:12px;border:none;border-radius:8px;background:var(--accent);
+       color:var(--main-bg);font-size:1rem;font-weight:bold;cursor:pointer;transition:background .3s;}
+button:hover{background:#ffc14d;}
+.home{display:block;text-align:center;margin-bottom:20px;color:var(--accent);text-decoration:none;font-weight:bold;}
+#result{margin-top:20px;text-align:center;font-size:1.2em;background:var(--main-bg);padding:15px;border-radius:8px;}
+.btns{display:flex;justify-content:space-between;margin-top:15px;}
 </style>
 </head>
 <body>
 <div class="container">
-  <h1 id="title">Production Cost</h1>
+<a href="index.html" class="home">Home</a>
+<h1 id="title"></h1>
 
-  <select id="language">
-    <option value="en">English</option>
-    <option value="it">Italiano</option>
-    <option value="fr">Français</option>
-    <option value="de">Deutsch</option>
-    <option value="es">Español</option>
-  </select>
-
-  <label id="labelWax" for="wax">Wax Needed (g):</label>
-  <input type="number" id="wax" placeholder="e.g. 1500">
-
-  <label id="labelPrice" for="price">Wax Price per Kg (€):</label>
-  <input type="number" id="price" step="0.01" placeholder="e.g. 7.50">
-
-  <button class="btn" id="calcBtn">Calculate Cost</button>
-  <div id="result"></div>
-  <a href="index.html" class="btn" id="homeBtn">Back to Home</a>
+<div id="inputs"></div>
+<div class="btns">
+  <button id="calc"></button>
+  <button id="reset"></button>
+</div>
+<div id="result"></div>
 </div>
 
 <script>
-const translations = {
-  en: {
-    title: "Production Cost",
-    labelWax: "Wax Needed (g):",
-    labelPrice: "Wax Price per Kg (€):",
-    calcBtn: "Calculate Cost",
-    homeBtn: "Back to Home",
-    result: (cost) => `Total cost: <strong>€${cost.toFixed(2)}</strong>`
-  },
-  it: {
-    title: "Costo di Produzione",
-    labelWax: "Cera Necessaria (g):",
-    labelPrice: "Prezzo Cera al Kg (€):",
-    calcBtn: "Calcola Costo",
-    homeBtn: "Torna alla Home",
-    result: (cost) => `Costo totale: <strong>€${cost.toFixed(2)}</strong>`
-  },
-  fr: {
-    title: "Coût de Production",
-    labelWax: "Cire nécessaire (g) :",
-    labelPrice: "Prix de la cire par Kg (€) :",
-    calcBtn: "Calculer le coût",
-    homeBtn: "Retour à l'accueil",
-    result: (cost) => `Coût total : <strong>€${cost.toFixed(2)}</strong>`
-  },
-  de: {
-    title: "Produktionskosten",
-    labelWax: "Benötigtes Wachs (g):",
-    labelPrice: "Wachspreis pro Kg (€):",
-    calcBtn: "Kosten berechnen",
-    homeBtn: "Zurück zur Startseite",
-    result: (cost) => `Gesamtkosten: <strong>€${cost.toFixed(2)}</strong>`
-  },
-  es: {
-    title: "Costo de Producción",
-    labelWax: "Cera Necesaria (g):",
-    labelPrice: "Precio de la cera por Kg (€):",
-    calcBtn: "Calcular Costo",
-    homeBtn: "Volver al Inicio",
-    result: (cost) => `Costo total: <strong>€${cost.toFixed(2)}</strong>`
-  }
+const t={
+ en:{title:"Production Cost",fields:["Wax cost","Wick cost","Container cost","Fragrance cost","Color cost","Shipping cost"],
+     calc:"Calculate",reset:"Reset",total:"Total cost: €"},
+ it:{title:"Costo di Produzione",fields:["Costo cera","Costo stoppino","Costo contenitore","Costo fragranza","Costo colore","Costo spedizione"],
+     calc:"Calcola",reset:"Reset",total:"Costo totale: €"},
+ fr:{title:"Coût de Production",fields:["Coût cire","Coût mèche","Coût récipient","Coût parfum","Coût colorant","Frais de port"],
+     calc:"Calculer",reset:"Réinitialiser",total:"Coût total : €"},
+ de:{title:"Herstellungskosten",fields:["Wachskosten","Dochtkosten","Behälterkosten","Duftkosten","Farbkosten","Versandkosten"],
+     calc:"Berechnen",reset:"Zurücksetzen",total:"Gesamtkosten: €"},
+ es:{title:"Costo de Producción",fields:["Costo de cera","Costo de mecha","Costo de recipiente","Costo de fragancia","Costo de colorante","Costo de envío"],
+     calc:"Calcular",reset:"Restablecer",total:"Costo total: €"}
 };
+const lang=localStorage.getItem('wax_lang')||'en';
+const tt=t[lang];
 
-function applyLanguage(lang) {
-  const t = translations[lang] || translations.en;
-  document.getElementById('title').textContent = t.title;
-  document.getElementById('labelWax').textContent = t.labelWax;
-  document.getElementById('labelPrice').textContent = t.labelPrice;
-  document.getElementById('calcBtn').textContent = t.calcBtn;
-  document.getElementById('homeBtn').textContent = t.homeBtn;
-}
-
-const langSelect = document.getElementById('language');
-const savedLang = localStorage.getItem('waxLang') || 'en';
-langSelect.value = savedLang;
-applyLanguage(savedLang);
-
-langSelect.addEventListener('change', () => {
-  localStorage.setItem('waxLang', langSelect.value);
-  applyLanguage(langSelect.value);
+document.getElementById('title').textContent=tt.title;
+const inputsDiv=document.getElementById('inputs');
+tt.fields.forEach((f,i)=>{
+  const inp=document.createElement('input');
+  inp.type='number';inp.placeholder=f+' (€)';inp.id='c'+i;
+  inputsDiv.appendChild(inp);
 });
 
-document.getElementById('calcBtn').addEventListener('click', () => {
-  const wax = parseFloat(document.getElementById('wax').value) || 0;
-  const price = parseFloat(document.getElementById('price').value) || 0;
-  const cost = (wax / 1000) * price;
-  const lang = langSelect.value;
-  document.getElementById('result').innerHTML = translations[lang].result(cost);
-});
+document.getElementById('calc').textContent=tt.calc;
+document.getElementById('reset').textContent=tt.reset;
+
+document.getElementById('calc').onclick=()=>{
+  let total=0;
+  for(let i=0;i<tt.fields.length;i++){
+    total+=parseFloat(document.getElementById('c'+i).value)||0;
+  }
+  document.getElementById('result').textContent=tt.total+total.toFixed(2);
+};
+document.getElementById('reset').onclick=()=>{
+  for(let i=0;i<tt.fields.length;i++)document.getElementById('c'+i).value='';
+  document.getElementById('result').textContent='';
+};
 </script>
 </body>
 </html>
