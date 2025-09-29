@@ -5,9 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WAX PRO – Home</title>
 <style>
-:root {
-  --main-bg:#2c2c2c; --panel-bg:#3d3d3d;
-  --accent:#ffa500; --text:#ffffff;
+:root{
+  --main-bg:#2c2c2c;
+  --panel-bg:#3d3d3d;
+  --accent:#ffa500;
+  --text:#ffffff;
 }
 body{
   background:var(--main-bg);
@@ -16,44 +18,71 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  min-height:100vh;
+  height:100vh;
   margin:0;
 }
 .container{
   background:var(--panel-bg);
-  padding:60px 40px;
+  padding:40px 30px;
   border-radius:15px;
+  width:100%;
+  max-width:400px;
   text-align:center;
   box-shadow:0 4px 15px rgba(0,0,0,.5);
+  box-sizing:border-box;
 }
-h1{
-  color:var(--accent);
-  font-size:2.5em;
-  letter-spacing:2px;
-  margin-bottom:40px;
-}
-button{
+h1{color:var(--accent);margin-bottom:25px;}
+.btn{
   display:block;
   width:100%;
   margin:15px 0;
-  padding:15px;
-  border:none;
-  border-radius:10px;
+  padding:14px;
   background:var(--accent);
   color:var(--main-bg);
-  font-size:1.2em;
+  border:none;
+  border-radius:10px;
   font-weight:bold;
+  font-size:1.1rem;
   cursor:pointer;
+  text-decoration:none;
   transition:background .3s;
 }
-button:hover{background:#ffc14d;}
+.btn:hover{background:#ffc14d;}
+select{
+  background:#505050;
+  color:#fff;
+  border:1px solid #555;
+  border-radius:8px;
+  padding:10px;
+  font-size:1rem;
+  margin-bottom:25px;
+  width:100%;
+}
 </style>
 </head>
 <body>
-  <div class="container">
-    <h1>WAX PRO</h1>
-    <button onclick="location.href='calcolatore.html'">Candle Calculator</button>
-    <button onclick="location.href='costo.html'">Production Cost Calculator</button>
-  </div>
+<div class="container">
+  <h1>WAX PRO</h1>
+
+  <select id="language">
+    <option value="en" selected>English</option>
+    <option value="it">Italiano</option>
+    <option value="fr">Français</option>
+    <option value="de">Deutsch</option>
+    <option value="es">Español</option>
+  </select>
+
+  <a href="calcolo.html" class="btn">Candle Calculator</a>
+  <a href="costo.html" class="btn">Production Cost</a>
+</div>
+
+<script>
+  const langSelect = document.getElementById('language');
+  const savedLang = localStorage.getItem('waxLang') || 'en';
+  langSelect.value = savedLang;
+  langSelect.addEventListener('change', () =>
+    localStorage.setItem('waxLang', langSelect.value)
+  );
+</script>
 </body>
 </html>
