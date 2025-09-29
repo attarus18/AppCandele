@@ -62,7 +62,7 @@ select{
 </head>
 <body>
 <div class="container">
-  <h1>WAX PRO</h1>
+  <h1 id="title">WAX PRO</h1>
 
   <select id="language">
     <option value="en" selected>English</option>
@@ -72,17 +72,55 @@ select{
     <option value="es">Español</option>
   </select>
 
-  <a href="calcolo.html" class="btn">Candle Calculator</a>
-  <a href="costo.html" class="btn">Production Cost</a>
+  <a href="calcolo.html" class="btn" id="calcBtn">Candle Calculator</a>
+  <a href="costo.html" class="btn" id="costBtn">Production Cost</a>
 </div>
 
 <script>
-  const langSelect = document.getElementById('language');
-  const savedLang = localStorage.getItem('waxLang') || 'en';
-  langSelect.value = savedLang;
-  langSelect.addEventListener('change', () =>
-    localStorage.setItem('waxLang', langSelect.value)
-  );
+const translations = {
+  en: {
+    title: "WAX PRO",
+    calcBtn: "Candle Calculator",
+    costBtn: "Production Cost"
+  },
+  it: {
+    title: "WAX PRO",
+    calcBtn: "Calcolatrice Candele",
+    costBtn: "Costo di Produzione"
+  },
+  fr: {
+    title: "WAX PRO",
+    calcBtn: "Calculateur de Bougies",
+    costBtn: "Coût de Production"
+  },
+  de: {
+    title: "WAX PRO",
+    calcBtn: "Kerzenrechner",
+    costBtn: "Produktionskosten"
+  },
+  es: {
+    title: "WAX PRO",
+    calcBtn: "Calculadora de Velas",
+    costBtn: "Costo de Producción"
+  }
+};
+
+function applyLanguage(lang) {
+  const t = translations[lang] || translations.en;
+  document.getElementById('title').textContent = t.title;
+  document.getElementById('calcBtn').textContent = t.calcBtn;
+  document.getElementById('costBtn').textContent = t.costBtn;
+}
+
+const langSelect = document.getElementById('language');
+const savedLang = localStorage.getItem('waxLang') || 'en';
+langSelect.value = savedLang;
+applyLanguage(savedLang);
+
+langSelect.addEventListener('change', () => {
+  localStorage.setItem('waxLang', langSelect.value);
+  applyLanguage(langSelect.value);
+});
 </script>
 </body>
 </html>
