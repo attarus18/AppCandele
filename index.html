@@ -33,15 +33,20 @@ select{
   background:#505050;color:#fff;border:1px solid #555;
   border-radius:8px;font-size:1rem;
 }
+#currentLangMsg {
+  color: var(--accent);
+  margin-top: 10px;
+  font-size: 1em;
+  font-weight: bold;
+}
 </style>
 </head>
 <body>
 <div class="container">
   <h1>WAX PRO</h1>
-
   <button id="btnCalc">Candle Calculator</button>
   <button id="btnCost">Production Cost</button>
-
+  <div id="currentLangMsg"></div>
   <select id="language">
     <option value="en">English</option>
     <option value="it">Italiano</option>
@@ -52,24 +57,27 @@ select{
 </div>
 
 <script>
+const langs = ["en", "it", "fr", "de", "es"];
 const t={
-  en:{calc:"Candle Calculator",cost:"Production Cost",lang:["English","Italiano","Français","Deutsch","Español"]},
-  it:{calc:"Calcolatore Candele",cost:"Costo di Produzione",lang:["Inglese","Italiano","Francese","Tedesco","Spagnolo"]},
-  fr:{calc:"Calculateur de Bougies",cost:"Coût de Production",lang:["Anglais","Italien","Français","Allemand","Espagnol"]},
-  de:{calc:"Kerzenrechner",cost:"Herstellungskosten",lang:["Englisch","Italienisch","Französisch","Deutsch","Spanisch"]},
-  es:{calc:"Calculadora de Velas",cost:"Costo de Producción",lang:["Inglés","Italiano","Francés","Alemán","Español"]}
+  en:{calc:"Candle Calculator",cost:"Production Cost",lang:["English","Italiano","Français","Deutsch","Español"],msg:"Current language: English"},
+  it:{calc:"Calcolatore Candele",cost:"Costo di Produzione",lang:["Inglese","Italiano","Francese","Tedesco","Spagnolo"],msg:"Lingua corrente: Italiano"},
+  fr:{calc:"Calculateur de Bougies",cost:"Coût de Production",lang:["Anglais","Italien","Français","Allemand","Espagnol"],msg:"Langue actuelle : Français"},
+  de:{calc:"Kerzenrechner",cost:"Herstellungskosten",lang:["Englisch","Italienisch","Französisch","Deutsch","Spanisch"],msg:"Aktuelle Sprache: Deutsch"},
+  es:{calc:"Calculadora de Velas",cost:"Costo de Producción",lang:["Inglés","Italiano","Francés","Alemán","Español"],msg:"Idioma actual: Español"}
 };
 
 const langSel=document.getElementById('language');
 const btnCalc=document.getElementById('btnCalc');
 const btnCost=document.getElementById('btnCost');
+const currentLangMsg=document.getElementById('currentLangMsg');
 
 function applyLang(l){
   btnCalc.textContent=t[l].calc;
   btnCost.textContent=t[l].cost;
-  // Aggiorna le label delle lingue
+  currentLangMsg.textContent = t[l].msg;
+  // Aggiorna label delle lingue senza cambiare il value
   for(let i=0;i<langSel.options.length;i++){
-    langSel.options[i].textContent=t[l].lang[i];
+    langSel.options[i].textContent = t[l].lang[i];
   }
 }
 
@@ -78,15 +86,17 @@ function setLang(l){
   applyLang(l);
 }
 
-langSel.addEventListener('change',()=>setLang(langSel.value));
+langSel.addEventListener('change',()=>{
+  setLang(langSel.value);
+});
 
 // Al primo caricamento usa la lingua salvata o inglese
-const saved=localStorage.getItem('wax_lang')||'en';
-langSel.value=saved;
-applyLang(saved);
+const saved=localStorage.getItem('wax_lang');
+langSel.value=saved ? saved : "en";
+applyLang(langSel.value);
 
-btnCalc.addEventListener('click',()=>location.href='calcolatore.html');
-btnCost.addEventListener('click',()=>location.href='costo.html');
+btnCalc.onclick=()=>location.href='calcolatore.html';
+btnCost.onclick=()=>location.href='costo.html';
 </script>
 </body>
 </html>
