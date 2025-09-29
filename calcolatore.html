@@ -6,19 +6,41 @@
 <title>WAX PRO – Candle Calculator</title>
 <style>
 :root{--main-bg:#2c2c2c;--panel-bg:#3d3d3d;--accent:#ffa500;--text:#ffffff;}
-body{background:var(--main-bg);color:var(--text);font-family:'Segoe UI',Tahoma,sans-serif;
-     display:flex;justify-content:center;align-items:center;min-height:100vh;margin:0;padding:20px;}
-.container{background:var(--panel-bg);padding:40px 30px;border-radius:15px;
-          width:100%;max-width:500px;box-shadow:0 4px 15px rgba(0,0,0,.5);}
+body{
+  background:var(--main-bg);color:var(--text);font-family:'Segoe UI',Tahoma,sans-serif;
+  display:flex;justify-content:center;align-items:center;min-height:100vh;margin:0;padding:20px;
+}
+.container{
+  background:var(--panel-bg);padding:40px 30px;border-radius:15px;
+  width:100%;max-width:500px;box-shadow:0 4px 15px rgba(0,0,0,.5);
+}
 h1{color:var(--accent);text-align:center;margin-bottom:20px;font-size:2em;}
-button{flex:1 1 45%;padding:12px 20px;border:none;border-radius:8px;background:var(--accent);
-       color:var(--main-bg);font-size:1rem;font-weight:bold;cursor:pointer;transition:background .3s;}
+button{
+  flex:1 1 45%;padding:12px 20px;border:none;border-radius:8px;background:var(--accent);
+  color:var(--main-bg);font-size:1rem;font-weight:bold;cursor:pointer;transition:background .3s;
+}
 button:hover{background:#ffc14d;}
-input,select{background:#505050;color:#fff;border:1px solid #555;border-radius:8px;padding:10px;width:100%;margin-bottom:20px;}
+input,select{
+  background:#505050;color:#fff;border:1px solid #555;border-radius:8px;
+  padding:10px;width:100%;margin-bottom:20px;
+}
 .slider-value{color:var(--accent);font-weight:bold;}
 .tasti-container{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;margin-top:20px;}
 .home{display:block;text-align:center;margin-bottom:20px;color:var(--accent);text-decoration:none;font-weight:bold;}
 #risultato{margin-top:25px;text-align:center;font-size:1.1em;background:var(--main-bg);padding:15px;border-radius:8px;}
+@media (max-width:600px){
+  body{padding:4px;}
+  .container{
+    padding:16px 4px;
+    max-width:98vw;
+    border-radius:10px;
+  }
+  h1{font-size:1.2em;margin-bottom:12px;}
+  .tasti-container{flex-direction:column;gap:7px;}
+  button{padding:10px 8px;font-size:0.95em;}
+  input,select{padding:7px;font-size:0.95em;}
+  #risultato{font-size:1em;padding:10px;}
+}
 </style>
 </head>
 <body>
