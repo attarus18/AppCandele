@@ -24,7 +24,7 @@ body {
 }
 .calcolatore-container {
     background: var(--panel-bg);
-    padding:40px 30px 30px; 
+    padding:40px 30px 30px;
     border-radius:15px;
     width:100%;
     max-width:500px;
@@ -34,7 +34,8 @@ body {
 }
 .home-btn{
     position:absolute;
-    top:10px; left:10px;
+    top:10px;
+    left:10px;
     background:var(--accent);
     color:var(--main-bg);
     padding:8px 15px;
@@ -53,12 +54,6 @@ body {
     margin-bottom:10px;
     letter-spacing:2px;
 }
-.language-selector {
-    position:absolute;
-    top:10px;
-    right:10px;
-}
-.language-selector select,
 .input-gruppo select,
 .input-gruppo input {
     background:#505050;
@@ -115,19 +110,7 @@ button:hover{background:#ffc14d;}
 </head>
 <body>
 <div class="calcolatore-container">
-    <!-- Pulsante Home -->
     <a href="index.html" class="home-btn">Home</a>
-
-    <div class="language-selector">
-        <select id="language">
-            <option value="en" selected>English</option>
-            <option value="it">Italiano</option>
-            <option value="fr">Français</option>
-            <option value="de">Deutsch</option>
-            <option value="es">Español</option>
-        </select>
-    </div>
-
     <div class="main-title">WAX PRO</div>
     <h1 id="title">Candle Calculator</h1>
 
@@ -167,6 +150,7 @@ button:hover{background:#ffc14d;}
 </div>
 
 <script>
+const lang = localStorage.getItem('waxLang') || 'en';
 const translations = {
   en:{title:"Candle Calculator",unit:"Unit:",peso:"Desired final weight:",frag:"Fragrance percentage:",col:"Color percentage:",
       calc:"Calculate",reset:"Reset",err:"Please enter a valid weight.",
@@ -200,16 +184,17 @@ const translations = {
                         <strong>${k.toFixed(2)} ${u}</strong> de colorante`}
 };
 
+const t = translations[lang];
+document.getElementById('title').textContent = t.title;
+document.getElementById('labelUnit').textContent = t.unit;
+document.getElementById('labelPeso').textContent = t.peso;
+document.getElementById('labelFragranza').childNodes[0].textContent = t.frag+" ";
+document.getElementById('labelColore').childNodes[0].textContent = t.col+" ";
+document.getElementById('calcola').textContent = t.calc;
+document.getElementById('reset').textContent = t.reset;
+
 const els = {
-  lang:document.getElementById('language'),
   unit:document.getElementById('unitSelect'),
-  title:document.getElementById('title'),
-  labelUnit:document.getElementById('labelUnit'),
-  labelPeso:document.getElementById('labelPeso'),
-  labelFrag:document.getElementById('labelFragranza'),
-  labelCol:document.getElementById('labelColore'),
-  calc:document.getElementById('calcola'),
-  reset:document.getElementById('reset'),
   peso:document.getElementById('pesoInput'),
   fragSlider:document.getElementById('percFragranza'),
   colSlider:document.getElementById('percColore'),
@@ -218,24 +203,10 @@ const els = {
   result:document.getElementById('risultato')
 };
 
-function updateLang(l){
-  const t=translations[l];
-  els.title.textContent=t.title;
-  els.labelUnit.textContent=t.unit;
-  els.labelPeso.textContent=t.peso;
-  els.labelFrag.childNodes[0].textContent=t.frag+" ";
-  els.labelCol.childNodes[0].textContent=t.col+" ";
-  els.calc.textContent=t.calc;
-  els.reset.textContent=t.reset;
-}
-els.lang.addEventListener('change',()=>updateLang(els.lang.value));
-updateLang('en');
-
 els.fragSlider.oninput=()=>els.valFrag.textContent=els.fragSlider.value+'%';
 els.colSlider.oninput=()=>els.valCol.textContent=parseFloat(els.colSlider.value).toFixed(1)+'%';
 
-els.calc.addEventListener('click',()=>{
-  const t=translations[els.lang.value];
+document.getElementById('calcola').addEventListener('click',()=>{
   const unit=els.unit.value;
   const weight=parseFloat(els.peso.value);
   if(isNaN(weight)||weight<=0){els.result.innerHTML=t.err;return;}
@@ -248,7 +219,7 @@ els.calc.addEventListener('click',()=>{
   els.result.innerHTML=t.res(weight,unit,wax,frag,color);
 });
 
-els.reset.addEventListener('click',()=>{
+document.getElementById('reset').addEventListener('click',()=>{
   els.peso.value='';
   els.unit.value='g';
   els.fragSlider.value=5; els.valFrag.textContent='5%';
