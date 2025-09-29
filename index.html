@@ -115,10 +115,8 @@ function applyLanguage(lang) {
 const langSelect = document.getElementById('language');
 const savedLang = localStorage.getItem('waxLang') || 'en';
 
-// 1. Imposta il valore del selettore sulla lingua salvata
 langSelect.value = savedLang;
-
-// 2. !!! FIX: Applica la traduzione appena la pagina si carica con la lingua salvata
+// 🟢 QUESTA È LA RIGA AGGIUNTA PER APPLICARE LA LINGUA SALVATA ALL'AVVIO
 applyLanguage(savedLang); 
 
 langSelect.addEventListener('change', () => {
