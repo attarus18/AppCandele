@@ -96,3 +96,59 @@ button:hover{background:#ffc14d;}
   h1{font-size:1.8em;}
   button{font-size:.95rem;padding:10px;}
 }
+</style>
+</head>
+<body>
+<div class="container">
+  <!-- Pulsante Home -->
+  <a href="index.html" class="home-btn">Home</a>
+
+  <h1>Production Cost</h1>
+
+  <label for="wax">Cera (€)</label>
+  <input type="number" id="wax" step="0.01">
+
+  <label for="wick">Stoppino (€)</label>
+  <input type="number" id="wick" step="0.01">
+
+  <label for="container">Contenitore (€)</label>
+  <input type="number" id="container" step="0.01">
+
+  <label for="fragrance">Fragranza (€)</label>
+  <input type="number" id="fragrance" step="0.01">
+
+  <label for="color">Colorante (€)</label>
+  <input type="number" id="color" step="0.01">
+
+  <label for="shipping">Spedizione (€)</label>
+  <input type="number" id="shipping" step="0.01">
+
+  <div class="actions">
+    <button id="calc">Calculate</button>
+    <button id="reset">Reset</button>
+  </div>
+
+  <div id="result"></div>
+</div>
+
+<script>
+// Raccoglie gli input in un array
+const inputs = ['wax','wick','container','fragrance','color','shipping']
+  .map(id => document.getElementById(id));
+const result = document.getElementById('result');
+
+// Calcolo del totale
+document.getElementById('calc').addEventListener('click', () => {
+  const values = inputs.map(i => parseFloat(i.value) || 0);
+  const total = values.reduce((a,b) => a + b, 0);
+  result.textContent = `Total production cost: € ${total.toFixed(2)}`;
+});
+
+// Reset dei campi
+document.getElementById('reset').addEventListener('click', () => {
+  inputs.forEach(i => i.value = '');
+  result.textContent = '';
+});
+</script>
+</body>
+</html>
