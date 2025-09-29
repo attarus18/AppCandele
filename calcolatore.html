@@ -51,7 +51,74 @@ input,select{background:#505050;color:#fff;border:1px solid #555;border-radius:8
 </div>
 
 <script>
-const translations={/* identico a prima, omesso per brevità */};
+const translations={
+  en:{
+    title:"Candle Calculator",
+    unit:"Unit of measure",
+    peso:"Total weight",
+    frag:"Fragrance % (1–35)",
+    col:"Color % (0–25)",
+    calc:"Calculate",reset:"Reset",
+    err:"Enter a valid total weight.",
+    res:(w,u,wax,fra,colr)=>`For <b>${w} ${u}</b>:<br>
+    Wax: <b>${wax.toFixed(2)} ${u}</b><br>
+    Fragrance: <b>${fra.toFixed(2)} ${u}</b><br>
+    Color: <b>${colr.toFixed(2)} ${u}</b>`
+  },
+  it:{
+    title:"Calcolatore Candele",
+    unit:"Unità di misura",
+    peso:"Peso totale",
+    frag:"% Fragranza (1–35)",
+    col:"% Colore (0–25)",
+    calc:"Calcola",reset:"Reset",
+    err:"Inserisci un peso totale valido.",
+    res:(w,u,wax,fra,colr)=>`Per <b>${w} ${u}</b>:<br>
+    Cera: <b>${wax.toFixed(2)} ${u}</b><br>
+    Fragranza: <b>${fra.toFixed(2)} ${u}</b><br>
+    Colore: <b>${colr.toFixed(2)} ${u}</b>`
+  },
+  fr:{
+    title:"Calculateur de Bougies",
+    unit:"Unité de mesure",
+    peso:"Poids total",
+    frag:"% Parfum (1–35)",
+    col:"% Colorant (0–25)",
+    calc:"Calculer",reset:"Réinitialiser",
+    err:"Entrez un poids total valide.",
+    res:(w,u,wax,fra,colr)=>`Pour <b>${w} ${u}</b>:<br>
+    Cire: <b>${wax.toFixed(2)} ${u}</b><br>
+    Parfum: <b>${fra.toFixed(2)} ${u}</b><br>
+    Colorant: <b>${colr.toFixed(2)} ${u}</b>`
+  },
+  de:{
+    title:"Kerzenrechner",
+    unit:"Maßeinheit",
+    peso:"Gesamtgewicht",
+    frag:"Duft % (1–35)",
+    col:"Farbe % (0–25)",
+    calc:"Berechnen",reset:"Zurücksetzen",
+    err:"Bitte ein gültiges Gesamtgewicht eingeben.",
+    res:(w,u,wax,fra,colr)=>`Für <b>${w} ${u}</b>:<br>
+    Wachs: <b>${wax.toFixed(2)} ${u}</b><br>
+    Duft: <b>${fra.toFixed(2)} ${u}</b><br>
+    Farbe: <b>${colr.toFixed(2)} ${u}</b>`
+  },
+  es:{
+    title:"Calculadora de Velas",
+    unit:"Unidad de medida",
+    peso:"Peso total",
+    frag:"% Fragancia (1–35)",
+    col:"% Colorante (0–25)",
+    calc:"Calcular",reset:"Restablecer",
+    err:"Ingrese un peso total válido.",
+    res:(w,u,wax,fra,colr)=>`Para <b>${w} ${u}</b>:<br>
+    Cera: <b>${wax.toFixed(2)} ${u}</b><br>
+    Fragancia: <b>${fra.toFixed(2)} ${u}</b><br>
+    Colorante: <b>${colr.toFixed(2)} ${u}</b>`
+  }
+};
+
 const lang=localStorage.getItem('wax_lang')||'en';
 const t=translations[lang];
 
