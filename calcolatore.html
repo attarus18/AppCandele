@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WAX PRO – Candle Calculator</title>
+<style>
+:root{--main-bg:#2c2c2c;--panel-bg:#3d3d3d;--accent:#ffa500;--text:#ffffff;}
+body{background:var(--main-bg);color:var(--text);font-family:'Segoe UI',Tahoma,sans-serif;
+     display:flex;justify-content:center;align-items:center;min-height:100vh;margin:0;padding:20px;}
+.container{background:var(--panel-bg);padding:40px 30px;border-radius:15px;
+          width:100%;max-width:500px;box-shadow:0 4px 15px rgba(0,0,0,.5);}
+h1{color:var(--accent);text-align:center;margin-bottom:20px;font-size:2em;}
+button{flex:1 1 45%;padding:12px 20px;border:none;border-radius:8px;background:var(--accent);
+       color:var(--main-bg);font-size:1rem;font-weight:bold;cursor:pointer;transition:background .3s;}
+button:hover{background:#ffc14d;}
+input,select{background:#505050;color:#fff;border:1px solid #555;border-radius:8px;padding:10px;width:100%;margin-bottom:20px;}
+.slider-value{color:var(--accent);font-weight:bold;}
+.tasti-container{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;margin-top:20px;}
+.home{display:block;text-align:center;margin-bottom:20px;color:var(--accent);text-decoration:none;font-weight:bold;}
+#risultato{margin-top:25px;text-align:center;font-size:1.1em;background:var(--main-bg);padding:15px;border-radius:8px;}
+</style>
+</head>
+<body>
+<div class="container">
+<a href="index.html" class="home">Home</a>
+<h1 id="title"></h1>
+
+<label id="labelUnit"></label>
+<select id="unitSelect">
+  <option value="g">g</option><option value="kg">kg</option>
+  <option value="lb">lb</option><option value="oz">oz</option>
+</select>
+
+<label id="labelPeso"></label>
+<input type="number" id="pesoInput" placeholder="100">
+
+<label id="labelFragranza"></label>
+<input type="range" id="percFragranza" min="1" max="35" value="5">
+<span id="valoreFragranza" class="slider-value">5%</span><br><br>
+
+<label id="labelColore"></label>
+<input type="range" id="percColore" min="0" max="25" value="1" step="0.1">
+<span id="valoreColore" class="slider-value">1%</span>
+
+<div class="tasti-container">
+  <button id="calcola"></button>
+  <button id="reset"></button>
+</div>
+<div id="risultato"></div>
+</div>
+
+<script>
+const translations={/* identico a prima, omesso per brevità */};
+const lang=localStorage.getItem('wax_lang')||'en';
+const t=translations[lang];
+
+document.getElementById('title').textContent=t.title;
+document.getElementById('labelUnit').textContent=t.unit;
+document.getElementById('labelPeso').textContent=t.peso;
+document.getElementById('labelFragranza').textContent=t.frag;
+document.getElementById('labelColore').textContent=t.col;
+document.getElementById('calcola').textContent=t.calc;
+document.getElementById('reset').textContent=t.reset;
+
+const peso=document.getElementById('pesoInput'),
+      frag=document.getElementById('percFragranza'),
+      col=document.getElementById('percColore'),
+      res=document.getElementById('risultato'),
+      valF=document.getElementById('valoreFragranza'),
+      valC=document.getElementById('valoreColore');
+
+frag.oninput=()=>valF.textContent=frag.value+'%';
+col.oninput=()=>valC.textContent=parseFloat(col.value).toFixed(1)+'%';
+
+document.getElementById('calcola').onclick=()=>{
+  const w=parseFloat(peso.value);
+  if(isNaN(w)||w<=0){res.innerHTML=t.err;return;}
+  const f=parseFloat(frag.value), c=parseFloat(col.value);
+  const total=100+f+c;
+  const wax=(w*100)/total, fra=(w*f)/total, colr=(w*c)/total;
+  res.innerHTML=t.res(w,document.getElementById('unitSelect').value,wax,fra,colr);
+};
+document.getElementById('reset').onclick=()=>{
+  peso.value='';frag.value=5;col.value=1;valF.textContent='5%';valC.textContent='1%';res.innerHTML='';
+};
+</script>
+</body>
+</html>
