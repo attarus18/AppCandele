@@ -39,6 +39,19 @@ select{
   font-size: 1em;
   font-weight: bold;
 }
+/* Responsive styles */
+@media (max-width: 600px){
+  body{padding:5px;}
+  .container{
+    padding:20px 8px;
+    max-width:98vw;
+    border-radius:10px;
+  }
+  h1{font-size:1.5em;margin-bottom:16px;}
+  button{padding:12px;font-size:1em;}
+  select{padding:8px;font-size:0.95em;}
+  #currentLangMsg{font-size:0.95em;}
+}
 </style>
 </head>
 <body>
@@ -75,7 +88,6 @@ function applyLang(l){
   btnCalc.textContent=t[l].calc;
   btnCost.textContent=t[l].cost;
   currentLangMsg.textContent = t[l].msg;
-  // Aggiorna label delle lingue senza cambiare il value
   for(let i=0;i<langSel.options.length;i++){
     langSel.options[i].textContent = t[l].lang[i];
   }
@@ -90,7 +102,6 @@ langSel.addEventListener('change',()=>{
   setLang(langSel.value);
 });
 
-// Al primo caricamento usa la lingua salvata o inglese
 const saved=localStorage.getItem('wax_lang');
 langSel.value=saved ? saved : "en";
 applyLang(langSel.value);
