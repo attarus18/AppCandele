@@ -6,16 +6,28 @@
 <title>WAX PRO – Production Cost</title>
 <style>
 :root{--main-bg:#2c2c2c;--panel-bg:#3d3d3d;--accent:#ffa500;--text:#ffffff;}
-body{background:var(--main-bg);color:var(--text);font-family:'Segoe UI',Tahoma,sans-serif;
-     display:flex;justify-content:center;align-items:center;min-height:100vh;margin:0;padding:20px;}
+body{
+  background:var(--main-bg);color:var(--text);font-family:'Segoe UI',Tahoma,sans-serif;
+  display:flex;justify-content:center;align-items:center;min-height:100vh;margin:0;padding:20px;
+}
 .container{
   background:var(--panel-bg);padding:40px 30px;border-radius:15px;
   width:100%;max-width:500px;box-shadow:0 4px 15px rgba(0,0,0,.5);
 }
 h1{color:var(--accent);text-align:center;margin-bottom:20px;font-size:2em;}
+label{
+  color: #fff;
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  text-align:left;
+}
+.input-group{
+  margin-bottom: 15px;
+}
 input{
   background:#505050;color:#fff;border:1px solid #555;border-radius:8px;
-  padding:10px;width:100%;margin-bottom:15px;
+  padding:10px;width:100%;
 }
 button{
   width:48%;padding:12px;border:none;border-radius:8px;background:var(--accent);
@@ -37,6 +49,7 @@ button:hover{background:#ffc14d;}
   button{width:100%;padding:10px;font-size:0.95em;}
   input{padding:7px;font-size:0.95em;}
   #result{font-size:1em;padding:10px;}
+  label{font-size:0.97em;}
 }
 </style>
 </head>
@@ -45,10 +58,13 @@ button:hover{background:#ffc14d;}
 <a href="index.html" class="home">Home</a>
 <h1 id="title"></h1>
 
-<div id="inputs"></div>
+<form id="costForm">
+  <!-- Le label e gli input verranno inserite via JS -->
+  <div id="inputs"></div>
+</form>
 <div class="btns">
-  <button id="calc"></button>
-  <button id="reset"></button>
+  <button id="calc" type="button"></button>
+  <button id="reset" type="button"></button>
 </div>
 <div id="result"></div>
 </div>
@@ -71,10 +87,18 @@ const tt=t[lang];
 
 document.getElementById('title').textContent=tt.title;
 const inputsDiv=document.getElementById('inputs');
+// Aggiungi label e input in modo accessibile
 tt.fields.forEach((f,i)=>{
-  const inp=document.createElement('input');
+  const group = document.createElement('div');
+  group.className = "input-group";
+  const lab = document.createElement('label');
+  lab.htmlFor = 'c'+i;
+  lab.textContent = f;
+  const inp = document.createElement('input');
   inp.type='number';inp.placeholder=f+' (€)';inp.id='c'+i;
-  inputsDiv.appendChild(inp);
+  group.appendChild(lab);
+  group.appendChild(inp);
+  inputsDiv.appendChild(group);
 });
 
 document.getElementById('calc').textContent=tt.calc;
