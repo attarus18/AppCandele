@@ -56,63 +56,51 @@ button:hover{background:#ffc14d;}
 <body>
 <div class="container">
 <a href="index.html" class="home">Home</a>
-<h1 id="title"></h1>
+<h1>Production Cost</h1>
 
 <form id="costForm">
-  <!-- Le label e gli input verranno inserite via JS -->
-  <div id="inputs"></div>
+  <div class="input-group">
+    <label for="c0">Wax cost</label>
+    <input type="number" id="c0" placeholder="Wax cost (€)">
+  </div>
+  <div class="input-group">
+    <label for="c1">Wick cost</label>
+    <input type="number" id="c1" placeholder="Wick cost (€)">
+  </div>
+  <div class="input-group">
+    <label for="c2">Container cost</label>
+    <input type="number" id="c2" placeholder="Container cost (€)">
+  </div>
+  <div class="input-group">
+    <label for="c3">Fragrance cost</label>
+    <input type="number" id="c3" placeholder="Fragrance cost (€)">
+  </div>
+  <div class="input-group">
+    <label for="c4">Color cost</label>
+    <input type="number" id="c4" placeholder="Color cost (€)">
+  </div>
+  <div class="input-group">
+    <label for="c5">Shipping cost</label>
+    <input type="number" id="c5" placeholder="Shipping cost (€)">
+  </div>
 </form>
 <div class="btns">
-  <button id="calc" type="button"></button>
-  <button id="reset" type="button"></button>
+  <button id="calc" type="button">Calculate</button>
+  <button id="reset" type="button">Reset</button>
 </div>
 <div id="result"></div>
 </div>
 
 <script>
-const t={
- en:{title:"Production Cost",fields:["Wax cost","Wick cost","Container cost","Fragrance cost","Color cost","Shipping cost"],
-     calc:"Calculate",reset:"Reset",total:"Total cost: €"},
- it:{title:"Costo di Produzione",fields:["Costo cera","Costo stoppino","Costo contenitore","Costo fragranza","Costo colore","Costo spedizione"],
-     calc:"Calcola",reset:"Reset",total:"Costo totale: €"},
- fr:{title:"Coût de Production",fields:["Coût cire","Coût mèche","Coût récipient","Coût parfum","Coût colorant","Frais de port"],
-     calc:"Calculer",reset:"Réinitialiser",total:"Coût total : €"},
- de:{title:"Herstellungskosten",fields:["Wachskosten","Dochtkosten","Behälterkosten","Duftkosten","Farbkosten","Versandkosten"],
-     calc:"Berechnen",reset:"Zurücksetzen",total:"Gesamtkosten: €"},
- es:{title:"Costo de Producción",fields:["Costo de cera","Costo de mecha","Costo de recipiente","Costo de fragancia","Costo de colorante","Costo de envío"],
-     calc:"Calcular",reset:"Restablecer",total:"Costo total: €"}
-};
-const lang=localStorage.getItem('wax_lang')||'en';
-const tt=t[lang];
-
-document.getElementById('title').textContent=tt.title;
-const inputsDiv=document.getElementById('inputs');
-// Aggiungi label e input in modo accessibile
-tt.fields.forEach((f,i)=>{
-  const group = document.createElement('div');
-  group.className = "input-group";
-  const lab = document.createElement('label');
-  lab.htmlFor = 'c'+i;
-  lab.textContent = f;
-  const inp = document.createElement('input');
-  inp.type='number';inp.placeholder=f+' (€)';inp.id='c'+i;
-  group.appendChild(lab);
-  group.appendChild(inp);
-  inputsDiv.appendChild(group);
-});
-
-document.getElementById('calc').textContent=tt.calc;
-document.getElementById('reset').textContent=tt.reset;
-
 document.getElementById('calc').onclick=()=>{
   let total=0;
-  for(let i=0;i<tt.fields.length;i++){
+  for(let i=0;i<6;i++){
     total+=parseFloat(document.getElementById('c'+i).value)||0;
   }
-  document.getElementById('result').textContent=tt.total+total.toFixed(2);
+  document.getElementById('result').textContent="Total cost: €"+total.toFixed(2);
 };
 document.getElementById('reset').onclick=()=>{
-  for(let i=0;i<tt.fields.length;i++)document.getElementById('c'+i).value='';
+  for(let i=0;i<6;i++)document.getElementById('c'+i).value='';
   document.getElementById('result').textContent='';
 };
 </script>
