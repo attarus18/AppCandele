@@ -42,7 +42,14 @@ input,select,input[type="range"]{
 }
 .slider-value{color:var(--accent);font-weight:bold;}
 .tasti-container{display:flex;flex-direction:column;gap:10px;justify-content:space-between;margin-top:20px;}
-.home{display:block;text-align:center;margin-bottom:20px;color:var(--accent);text-decoration:none;font-weight:bold;}
+.home{display:block;text-align:center;margin-bottom:20px;}
+.home-icon {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  display: inline-block;
+  vertical-align: middle;
+}
 #risultato{margin-top:25px;text-align:center;font-size:1.1em;background:var(--main-bg);padding:15px;border-radius:8px;}
 @media (max-width:600px){
   body{padding:4px;}
@@ -57,12 +64,15 @@ input,select,input[type="range"]{
   button{padding:10px 8px;font-size:0.95em;}
   input,select,input[type="range"]{padding:7px;font-size:0.95em;}
   #risultato{font-size:1em;padding:10px;}
+  .home-icon { width: 30px; height: 30px; }
 }
 </style>
 </head>
 <body>
 <div class="container">
-<a href="index.html" class="home">Home</a>
+<a href="index.html" class="home">
+  <img src="PulsanteHomePage.PNG" alt="Home" class="home-icon">
+</a>
 <h1>Candle Calculator</h1>
 
 <label>Unit of measure</label>
