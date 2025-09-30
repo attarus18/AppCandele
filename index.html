@@ -18,7 +18,7 @@ body{
   background:var(--panel-bg);padding:40px 30px;border-radius:15px;
   text-align:center;max-width:400px;width:100%;
   box-shadow:0 4px 15px rgba(0,0,0,.5);
-  border:4px solid var(--accent); /* linea arancione */
+  border:4px solid var(--accent); /* orange border */
 }
 h1{color:var(--accent);margin-bottom:20px;font-size:2.4em;}
 button{
@@ -29,17 +29,6 @@ button{
   transition:background .3s;
 }
 button:hover{background:#ffc14d;}
-select{
-  margin-top:20px;width:100%;padding:10px;
-  background:#505050;color:#fff;border:1px solid #555;
-  border-radius:8px;font-size:1rem;
-}
-#currentLangMsg {
-  color: var(--accent);
-  margin-top: 10px;
-  font-size: 1em;
-  font-weight: bold;
-}
 /* Responsive styles */
 @media (max-width: 600px){
   body{padding:5px;}
@@ -51,8 +40,6 @@ select{
   }
   h1{font-size:1.5em;margin-bottom:16px;}
   button{padding:12px;font-size:1em;}
-  select{padding:8px;font-size:0.95em;}
-  #currentLangMsg{font-size:0.95em;}
 }
 </style>
 </head>
@@ -61,55 +48,11 @@ select{
   <h1>WAX PRO</h1>
   <button id="btnCalc">Candle Calculator</button>
   <button id="btnCost">Production Cost</button>
-  <div id="currentLangMsg"></div>
-  <select id="language">
-    <option value="en">English</option>
-    <option value="it">Italiano</option>
-    <option value="fr">Français</option>
-    <option value="de">Deutsch</option>
-    <option value="es">Español</option>
-  </select>
 </div>
 
 <script>
-const langs = ["en", "it", "fr", "de", "es"];
-const t={
-  en:{calc:"Candle Calculator",cost:"Production Cost",lang:["English","Italiano","Français","Deutsch","Español"],msg:"Current language: English"},
-  it:{calc:"Calcolatore Candele",cost:"Costo di Produzione",lang:["Inglese","Italiano","Francese","Tedesco","Spagnolo"],msg:"Lingua corrente: Italiano"},
-  fr:{calc:"Calculateur de Bougies",cost:"Coût de Production",lang:["Anglais","Italien","Français","Allemand","Espagnol"],msg:"Langue actuelle : Français"},
-  de:{calc:"Kerzenrechner",cost:"Herstellungskosten",lang:["Englisch","Italienisch","Französisch","Deutsch","Spanisch"],msg:"Aktuelle Sprache: Deutsch"},
-  es:{calc:"Calculadora de Velas",cost:"Costo de Producción",lang:["Inglés","Italiano","Francés","Alemán","Español"],msg:"Idioma actual: Español"}
-};
-
-const langSel=document.getElementById('language');
-const btnCalc=document.getElementById('btnCalc');
-const btnCost=document.getElementById('btnCost');
-const currentLangMsg=document.getElementById('currentLangMsg');
-
-function applyLang(l){
-  btnCalc.textContent=t[l].calc;
-  btnCost.textContent=t[l].cost;
-  currentLangMsg.textContent = t[l].msg;
-  for(let i=0;i<langSel.options.length;i++){
-    langSel.options[i].textContent = t[l].lang[i];
-  }
-}
-
-function setLang(l){
-  localStorage.setItem('wax_lang',l);
-  applyLang(l);
-}
-
-langSel.addEventListener('change',()=>{
-  setLang(langSel.value);
-});
-
-const saved=localStorage.getItem('wax_lang');
-langSel.value=saved ? saved : "en";
-applyLang(langSel.value);
-
-btnCalc.onclick=()=>location.href='calcolatore.html';
-btnCost.onclick=()=>location.href='costo.html';
+document.getElementById('btnCalc').onclick=()=>location.href='calcolatore.html';
+document.getElementById('btnCost').onclick=()=>location.href='costo.html';
 </script>
 </body>
 </html>
