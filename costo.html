@@ -50,7 +50,14 @@ button{
   margin-bottom: 0;
 }
 button:hover{background:#ffc14d;}
-.home{display:block;text-align:center;margin-bottom:20px;color:var(--accent);text-decoration:none;font-weight:bold;}
+.home{display:block;text-align:center;margin-bottom:20px;}
+.home-icon {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  display: inline-block;
+  vertical-align: middle;
+}
 #result{margin-top:20px;text-align:center;font-size:1.2em;background:var(--main-bg);padding:15px;border-radius:8px;}
 .btns{display:flex;flex-direction:column;gap:10px;margin-top:15px;}
 @media (max-width:600px){
@@ -67,12 +74,15 @@ button:hover{background:#ffc14d;}
   input, select, input[type="range"]{padding:7px;font-size:0.95em;}
   #result{font-size:1em;padding:10px;}
   label{font-size:0.97em;}
+  .home-icon { width: 30px; height: 30px; }
 }
 </style>
 </head>
 <body>
 <div class="container">
-<a href="index.html" class="home">Home</a>
+<a href="index.html" class="home">
+  <img src="PulsanteHomePage.PNG" alt="Home" class="home-icon">
+</a>
 <h1>Production Cost</h1>
 
 <form id="costForm">
